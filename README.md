@@ -3,7 +3,7 @@ A clean, minimalistic, easy-to-use and highly customizable pin lock custom view 
 
 ![PinLockView](https://github.com/aritraroy/PinLockView/blob/master/screens/logo.png)
 
-This library allows you to implement a pin lock mechanism in your app easily and quickly. There are **plenty of customization options** available to change the look-and-feel of this view to match your app's theme.
+This library allows you to implement a pin lock mechanism in your app **easily and quickly**. There are **plenty of customization options** available to change the look-and-feel of this view to match your app's theme.
 
 You can also use it as a dial pad to dial numbers. There are several other use cases of this library and is not restricted to only pin locking.
 
@@ -18,7 +18,7 @@ This library is available in **jCenter** which is the default Maven repository u
 dependencies {
     // other dependencies here
     
-    compile 'com.andrognito.kerningview:kerningview:1.0.0'
+    compile 'com.andrognito.pinlockview:pinlockview:1.0.0'
 }
 ```
 
@@ -26,7 +26,7 @@ dependencies {
 
 ```xml
 <dependency>
-  <groupId>om.andrognito.pinlockview</groupId>
+  <groupId>com.andrognito.pinlockview</groupId>
   <artifactId>pinlockview</artifactId>
   <version>1.0.0</version>
   <type>pom</type>
@@ -74,18 +74,18 @@ private PinLockListener mPinLockListener = new PinLockListener() {
 };
 ```
 
-And that's it! Your pin lock view is ready to go.
+And that's it! Your PinLockView is ready to rock.
 
-But the good thing is that the, ```PinLockView``` comes with a whole lot of customization options which you can use to customize the view in any way you want to.
+But the good thing is that the, ```PinLockView``` comes with a whole lot of customization options which you can use to customize the view in any way you want.
 
 # Customization
 
 ## IndicatorDots (Addon)
-PinLockView comes bundled with an addon view, ```IndicatorDots``` which can be optionally attached with the PinLockView to indicate pin changes visually.
+PinLockView comes bundled with an addon view, ```IndicatorDots``` which can be optionally attached with the PinLockView to indicate pin changes visually to the user.
 
-This **view has been decoupled from the PinLockView** so that you can optionally add it if necessary. Suppose you are implementing a dial pad, then you will certainly not need this IndicatorView.
+This **view has been decoupled from the PinLockView** so that you can optionally add it, if necessary. Suppose you are implementing a dial pad, then you will certainly not need this IndicatorView.
 
-Add the view to yout XML layout, generally above your PinLockView,
+Add the view to you XML layout, generally placed above your PinLockView,
 
 ```xml
  <com.andrognito.pinlockview.IndicatorDots
