@@ -1,14 +1,38 @@
 # PinLockView
-A clean, minimalistic, easy-to-use and highly customizable pin lock custom view
+A clean, minimalistic, easy-to-use and highly customizable pin lock custom view for Android
 
 ![PinLockView](https://github.com/aritraroy/PinLockView/blob/master/screens/promo.png)
 
-This library allows you to implement a pin lock mechanism in your app easily and quickly. There are plenty of customization options available to change the look-and-feel of this view to match your app's theme.
+This library allows you to implement a pin lock mechanism in your app easily and quickly. There are **plenty of customization options** available to change the look-and-feel of this view to match your app's theme.
 
 You can also use it as a dial pad to dial numbers. There are several other use cases of this library and is not restricted to only pin locking.
 
+# Download
+
+This library is available in **jCenter** which is the default Maven repository used in Android Studio.
+
+## Gradle 
+```gradle
+dependencies {
+    // other dependencies here
+    
+    compile 'com.andrognito.kerningview:kerningview:1.0.0'
+}
+```
+
+## Maven
+
+```xml
+<dependency>
+  <groupId>om.andrognito.pinlockview</groupId>
+  <artifactId>pinlockview</artifactId>
+  <version>1.0.0</version>
+  <type>pom</type>
+</dependency>
+```
+
 # Usage
-We recommend you to check the sample app to get a complete understanding of the library. The step-by-step implementation guide is as follows.
+We recommend you to **check the sample app** to get a complete understanding of the library. The step-by-step implementation guide is as follows.
 
 ### Step 1
 
@@ -57,7 +81,7 @@ But the good thing is that the, ```PinLockView``` comes with a whole lot of cust
 ## IndicatorDots (Addon)
 PinLockView comes bundled with an addon view, ```IndicatorDots``` which can be optionally attached with the PinLockView to indicate pin changes visually.
 
-This view has been decoupled from the parent view so that you can optionally add it if necessary. Suppose you are implementing a dial pad, then you will certainly not need this IndicatorView.
+This **view has been decoupled from the PinLockView** so that you can optionally add it if necessary. Suppose you are implementing a dial pad, then you will certainly not need this IndicatorView.
 
 Add the view to yout XML layout, generally above your PinLockView,
 
@@ -74,7 +98,7 @@ mIndicatorDots = (IndicatorDots) findViewById(R.id.indicator_dots);
 mPinLockView.attachIndicatorDots(mIndicatorDots);
 ```
 
-You MUST attach it to the PinLockView, otherwise it will be simply ignored.
+You **MUST** attach it to the PinLockView, otherwise it will be simply ignored.
 
 ## Theming
 
@@ -101,8 +125,8 @@ There are several theming options available through XML attributes which you can
 
 # Author
 
-Aritra Roy - aritra.roy.in@gmail.com
-Play Store - <a href="https://play.google.com/store/apps/details?id=com.codexapps.andrognito">Andrognito</a>
+**Aritra Roy** - aritra.roy.in@gmail.com
+**Play Store** - <a href="https://play.google.com/store/apps/details?id=com.codexapps.andrognito">Andrognito</a>
 
 # Contribution
 
