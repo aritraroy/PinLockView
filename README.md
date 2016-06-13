@@ -1,3 +1,5 @@
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PinLockView-green.svg?style=true)](https://android-arsenal.com/details/1/3706)
+
 # PinLockView
 A clean, minimalistic, easy-to-use and highly customizable pin lock custom view for Android
 
