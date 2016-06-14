@@ -1,7 +1,7 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PinLockView-green.svg?style=true)](https://android-arsenal.com/details/1/3706)
 
 # PinLockView
-A clean, minimalistic, easy-to-use and highly customizable pin lock custom view for Android
+A clean, minimalistic, easy-to-use and highly customizable pin lock custom view for Android.
 
 ![PinLockView](https://github.com/aritraroy/PinLockView/blob/master/screens/logo.png)
 
@@ -40,20 +40,23 @@ We recommend you to **check the sample app** to get a complete understanding of 
 
 ### Step 1
 
-Place the view in your layout XML file.
+Place the view in your XML layout file.
 
+```xml
     <com.andrognito.pinlockview.PinLockView
         android:id="@+id/pin_lock_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-        
+```
 
 ### Step 2
 
 Reference the view in code and add a listener to it.
 
+```java
     mPinLockView = (PinLockView) findViewById(R.id.pin_lock_view);
     mPinLockView.setPinLockListener(mPinLockListener);
+```
 
 Implement the listener interface as follows,
 
@@ -78,7 +81,7 @@ private PinLockListener mPinLockListener = new PinLockListener() {
 
 And that's it! Your PinLockView is ready to rock.
 
-But the good thing is that the, ```PinLockView``` comes with a whole lot of customization options which you can use to customize the view in any way you want.
+But the good thing is that the ```PinLockView``` comes with a whole lot of customization options which you can use to customize the view in any way you want.
 
 # Customization
 
@@ -134,7 +137,7 @@ There are several theming options available through XML attributes which you can
 
 # Contribution
 
-This libary is quite exhaustive and offers a lot of customization options. If you find a bug or would like to improve any aspect of it, feel free to contribute with pull requests.
+This library is quite exhaustive and offers a lot of customization options. If you find a bug or would like to improve any aspect of it, feel free to contribute with pull requests.
 
 # License
 
