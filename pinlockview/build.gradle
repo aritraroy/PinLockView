@@ -4,7 +4,7 @@ ext {
     bintrayRepo = 'maven'
     bintrayName = 'pin-lock-view'
 
-    publishedGroupId = 'om.andrognito.pinlockview'
+    publishedGroupId = 'com.andrognito.pinlockview'
     libraryName = 'pinlockview'
     artifact = 'pinlockview'
 
