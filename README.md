@@ -1,11 +1,15 @@
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PinLockView-green.svg?style=true)](https://android-arsenal.com/details/1/3706)
+
 # PinLockView
-A clean, minimalistic, easy-to-use and highly customizable pin lock custom view for Android
+A clean, minimalistic, easy-to-use and highly customizable pin lock custom view for Android.
 
-![PinLockView](https://github.com/aritraroy/PinLockView/blob/master/screens/promo.png)
+![PinLockView](https://github.com/aritraroy/PinLockView/blob/master/screens/logo.png)
 
-This library allows you to implement a pin lock mechanism in your app easily and quickly. There are **plenty of customization options** available to change the look-and-feel of this view to match your app's theme.
+This library allows you to implement a pin lock mechanism in your app **easily and quickly**. There are **plenty of customization options** available to change the look-and-feel of this view to match your app's theme.
 
 You can also use it as a dial pad to dial numbers. There are several other use cases of this library and is not restricted to only pin locking.
+
+![PinLockView](https://github.com/aritraroy/PinLockView/blob/master/screens/promo.png)
 
 # Download
 
@@ -16,7 +20,7 @@ This library is available in **jCenter** which is the default Maven repository u
 dependencies {
     // other dependencies here
     
-    compile 'com.andrognito.kerningview:kerningview:1.0.0'
+    compile 'com.andrognito.pinlockview:pinlockview:1.0.0'
 }
 ```
 
@@ -24,7 +28,7 @@ dependencies {
 
 ```xml
 <dependency>
-  <groupId>om.andrognito.pinlockview</groupId>
+  <groupId>com.andrognito.pinlockview</groupId>
   <artifactId>pinlockview</artifactId>
   <version>1.0.0</version>
   <type>pom</type>
@@ -36,20 +40,23 @@ We recommend you to **check the sample app** to get a complete understanding of 
 
 ### Step 1
 
-Place the view in your layout XML file.
+Place the view in your XML layout file.
 
+```xml
     <com.andrognito.pinlockview.PinLockView
         android:id="@+id/pin_lock_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-        
+```
 
 ### Step 2
 
 Reference the view in code and add a listener to it.
 
+```java
     mPinLockView = (PinLockView) findViewById(R.id.pin_lock_view);
     mPinLockView.setPinLockListener(mPinLockListener);
+```
 
 Implement the listener interface as follows,
 
@@ -72,18 +79,18 @@ private PinLockListener mPinLockListener = new PinLockListener() {
 };
 ```
 
-And that's it! Your pin lock view is ready to go.
+And that's it! Your PinLockView is ready to rock.
 
-But the good thing is that the, ```PinLockView``` comes with a whole lot of customization options which you can use to customize the view in any way you want to.
+But the good thing is that the ```PinLockView``` comes with a whole lot of customization options which you can use to customize the view in any way you want.
 
 # Customization
 
 ## IndicatorDots (Addon)
-PinLockView comes bundled with an addon view, ```IndicatorDots``` which can be optionally attached with the PinLockView to indicate pin changes visually.
+PinLockView comes bundled with an addon view, ```IndicatorDots``` which can be optionally attached with the PinLockView to indicate pin changes visually to the user.
 
-This **view has been decoupled from the PinLockView** so that you can optionally add it if necessary. Suppose you are implementing a dial pad, then you will certainly not need this IndicatorView.
+This **view has been decoupled from the PinLockView** so that you can optionally add it, if necessary. Suppose you are implementing a dial pad, then you will certainly not need this IndicatorView.
 
-Add the view to yout XML layout, generally above your PinLockView,
+Add the view to you XML layout, generally placed above your PinLockView,
 
 ```xml
  <com.andrognito.pinlockview.IndicatorDots
@@ -130,7 +137,7 @@ There are several theming options available through XML attributes which you can
 
 # Contribution
 
-This libary is quite exhaustive and offers a lot of customization options. If you find a bug or would like to improve any aspect of it, feel free to contribute with pull requests.
+This library is quite exhaustive and offers a lot of customization options. If you find a bug or would like to improve any aspect of it, feel free to contribute with pull requests.
 
 # License
 
