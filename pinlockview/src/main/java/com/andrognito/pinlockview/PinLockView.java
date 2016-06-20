@@ -382,6 +382,9 @@ public class PinLockView extends RecyclerView {
 
         clearInternalPin();
 
+        mAdapter.setPinLength(mPin.length());
+        mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
+
         if (mIndicatorDots != null) {
             mIndicatorDots.updateDot(mPin.length());
         }
