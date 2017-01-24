@@ -3,7 +3,6 @@ package com.andrognito.pinlockview;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.os.Vibrator;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.HapticFeedbackConstants;
@@ -20,12 +19,9 @@ import android.widget.LinearLayout;
  */
 public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public static final int DEFAULT_VIBRATE_CLICK = 50;
-
     private static final int VIEW_TYPE_NUMBER = 0;
     private static final int VIEW_TYPE_DELETE = 1;
     private static final int VIEW_TYPE_LEFT_BUTTON = 2;
-    private final Vibrator vibrator;
 
     private Context mContext;
     private CustomizationOptionsBundle mCustomizationOptionsBundle;
@@ -36,7 +32,6 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public PinLockAdapter(Context context) {
         this.mContext = context;
-        this.vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     @Override
@@ -108,7 +103,9 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private void configureNumberButtonHolder(NumberViewHolder holder, int position) {
         if (holder != null) {
-            if (position == 10) {
+            if( position == 11){
+                holder.mNumberButton.setVisibility(View.INVISIBLE);
+            }else if (position == 10) {
                 holder.mNumberButton.setText("0");
             } else if (position == 9) {
                 holder.mNumberButton.setVisibility(View.INVISIBLE);
@@ -136,7 +133,7 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (holder != null) {
             if (mCustomizationOptionsBundle.isShowDeleteButton()
                     && (mPinLength > 0 || !mCustomizationOptionsBundle.isAutoHideDeleteButton())) {
-                holder.mButtonImage.setVisibility(View.VISIBLE);
+                holder.mDeleteButton.setVisibility(View.VISIBLE);
                 if (mCustomizationOptionsBundle.getDeleteButtonDrawable() != null) {
                     holder.mButtonImage.setImageDrawable(mCustomizationOptionsBundle.getDeleteButtonDrawable());
                 }
@@ -144,7 +141,7 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mCustomizationOptionsBundle.getDeleteButtonSize(), mCustomizationOptionsBundle.getDeleteButtonSize());
                 holder.mButtonImage.setLayoutParams(params);
             } else {
-                holder.mButtonImage.setVisibility(View.GONE);
+                holder.mDeleteButton.setVisibility(View.GONE);
             }
         }
     }
