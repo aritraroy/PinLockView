@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 /**
  * The customization options for the buttons in {@link PinLockView}
  * passed to the {@link PinLockAdapter} to decorate the individual views
- *
+ * <p>
  * Created by aritraroy on 01/06/16.
  */
 public class CustomizationOptionsBundle {
@@ -13,11 +13,18 @@ public class CustomizationOptionsBundle {
     private int textColor;
     private int textSize;
     private int buttonSize;
-    private Drawable buttonBackgroundDrawable;
+    private int buttonBackgroundId;
     private Drawable deleteButtonDrawable;
     private int deleteButtonSize;
     private boolean showDeleteButton;
     private int deleteButtonPressesColor;
+
+    private boolean autoHideDeleteButton;
+    private boolean showLeftButton;
+    private String leftButtonText;
+    private int leftButtonTextSize;
+    private String textFontName;
+    private boolean vibrateButtonClick;
 
     public CustomizationOptionsBundle() {
     }
@@ -46,12 +53,12 @@ public class CustomizationOptionsBundle {
         this.buttonSize = buttonSize;
     }
 
-    public Drawable getButtonBackgroundDrawable() {
-        return buttonBackgroundDrawable;
+    public int getButtonBackgroundId() {
+        return buttonBackgroundId;
     }
 
-    public void setButtonBackgroundDrawable(Drawable buttonBackgroundDrawable) {
-        this.buttonBackgroundDrawable = buttonBackgroundDrawable;
+    public void setButtonBackgroundId(int buttonBackgroundId) {
+        this.buttonBackgroundId = buttonBackgroundId;
     }
 
     public Drawable getDeleteButtonDrawable() {
@@ -84,5 +91,54 @@ public class CustomizationOptionsBundle {
 
     public void setDeleteButtonPressesColor(int deleteButtonPressesColor) {
         this.deleteButtonPressesColor = deleteButtonPressesColor;
+    }
+
+    public boolean isAutoHideDeleteButton() {
+        return autoHideDeleteButton;
+    }
+
+    public void setAutoHideDeleteButton(boolean autoHideDeleteButton) {
+        this.autoHideDeleteButton = autoHideDeleteButton;
+    }
+
+    public boolean isShowLeftButton() {
+        return showLeftButton;
+    }
+
+    public void setShowLeftButton(boolean showLeftButton) {
+        this.showLeftButton = showLeftButton;
+    }
+
+    public String getLeftButtonText() {
+        return leftButtonText;
+    }
+
+    public void setLeftButtonText(String leftButtonText) {
+        this.leftButtonText = leftButtonText;
+    }
+
+    public int getLeftButtonTextSize() {
+        return leftButtonTextSize;
+    }
+
+    public void setLeftButtonTextSize(int leftButtonTextSize) {
+        this.leftButtonTextSize = leftButtonTextSize;
+    }
+
+    public String getTextFontName() {
+        return textFontName;
+    }
+
+    public void setTextFontName(String textFontName) {
+        this.textFontName = textFontName;
+    }
+
+
+    public boolean isVibrateButtonClick() {
+        return vibrateButtonClick;
+    }
+
+    public void setVibrateButtonClick(boolean vibrateButtonClick) {
+        this.vibrateButtonClick = vibrateButtonClick;
     }
 }
