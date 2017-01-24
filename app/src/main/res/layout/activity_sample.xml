@@ -60,7 +60,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 app:keypadButtonSize="72dp"
-                app:keypadShowDeleteButton="false"
+                app:keypadShowDeleteButton="true"
                 app:keypadTextColor="@color/white"
                 app:keypadTextSize="18dp"/>
 
