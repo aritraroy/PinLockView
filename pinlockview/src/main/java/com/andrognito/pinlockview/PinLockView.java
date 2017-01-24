@@ -3,6 +3,7 @@ package com.andrognito.pinlockview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,99 +25,120 @@ public class PinLockView extends RecyclerView {
     private int mPinLength;
     private int mHorizontalSpacing, mVerticalSpacing;
     private int mTextColor, mDeleteButtonPressedColor;
-    private int mTextSize, mButtonSize, mDeleteButtonSize;
-    private Drawable mButtonBackgroundDrawable;
+    private int mTextSize, mButtonSize, mDeleteButtonSize, mLeftButtonTextSize;
+    private int mButtonBackgroundId;
     private Drawable mDeleteButtonDrawable;
-    private boolean mShowDeleteButton;
+    private boolean mShowDeleteButton, mAutoHideDeleteButton, mShowLeftButton, mVibrateButtonClick;
+    private String mLeftButtonText, mTextFontName;
 
     private IndicatorDots mIndicatorDots;
     private PinLockAdapter mAdapter;
     private PinLockListener mPinLockListener;
+    private LeftButtonClickListener mLeftButtonListener;
     private CustomizationOptionsBundle mCustomizationOptionsBundle;
 
-    private PinLockAdapter.OnNumberClickListener mOnNumberClickListener = new PinLockAdapter.OnNumberClickListener() {
-        @Override
-        public void onNumberClicked(int position) {
-            String key = getData(position);
-            if (mPin.length() < getPinLength()) {
-                mPin = mPin.concat(key);
-
-                if (isIndicatorDotsAttached()) {
-                    mIndicatorDots.updateDot(mPin.length());
+    @NonNull
+    private PinLockAdapter.OnLeftButtonClickListener createLeftButtonClickListener() {
+        return new PinLockAdapter.OnLeftButtonClickListener() {
+            @Override
+            public void onLeftButtonClicked(PinLockAdapter.LeftButtonViewHolder numberViewHolder) {
+                if (mLeftButtonListener != null) {
+                    mLeftButtonListener.onLeftButtonClicked(numberViewHolder);
                 }
+            }
+        };
+    }
 
-                if (mPin.length() == 1) {
-                    mAdapter.setPinLength(mPin.length());
-                    mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
-                }
-
-                if (mPinLockListener != null) {
-                    if (mPin.length() == mPinLength) {
-                        mPinLockListener.onComplete(mPin);
-                    } else {
-                        mPinLockListener.onPinChange(mPin.length(), mPin);
-                    }
-                }
-            } else {
-                if (!isShowDeleteButton()) {
-                    resetPinLockView();
+    @NonNull
+    private PinLockAdapter.OnNumberClickListener createNumberClickListener() {
+        return new PinLockAdapter.OnNumberClickListener() {
+            @Override
+            public void onNumberClicked(PinLockAdapter.NumberViewHolder numberViewHolder) {
+                int position = numberViewHolder.getAdapterPosition();
+                String key = getData(position);
+                if (mPin.length() < getPinLength()) {
                     mPin = mPin.concat(key);
 
                     if (isIndicatorDotsAttached()) {
                         mIndicatorDots.updateDot(mPin.length());
                     }
 
-                    if (mPinLockListener != null) {
-                        mPinLockListener.onPinChange(mPin.length(), mPin);
+                    if (mPin.length() == 1) {
+                        mAdapter.setPinLength(mPin.length());
+                        mAdapter.notifyItemChanged(position);
                     }
 
-                } else {
                     if (mPinLockListener != null) {
-                        mPinLockListener.onComplete(mPin);
+                        if (mPin.length() == mPinLength) {
+                            mPinLockListener.onComplete(mPin);
+                        } else {
+                            mPinLockListener.onPinChange(mPin.length(), mPin);
+                        }
+                    }
+                } else {
+                    if (!isShowDeleteButton()) {
+                        resetPinLockView();
+                        mPin = mPin.concat(key);
+
+                        if (isIndicatorDotsAttached()) {
+                            mIndicatorDots.updateDot(mPin.length());
+                        }
+
+                        if (mPinLockListener != null) {
+                            mPinLockListener.onPinChange(mPin.length(), mPin);
+                        }
+
+                    } else {
+                        if (mPinLockListener != null) {
+                            mPinLockListener.onComplete(mPin);
+                        }
                     }
                 }
             }
-        }
-    };
+        };
+    }
 
-    private PinLockAdapter.OnDeleteClickListener mOnDeleteClickListener = new PinLockAdapter.OnDeleteClickListener() {
-        @Override
-        public void onDeleteClicked() {
-            if (mPin.length() > 0) {
-                mPin = mPin.substring(0, mPin.length() - 1);
+    @NonNull
+    private PinLockAdapter.OnDeleteClickListener createDeleteClickListener() {
+        return new PinLockAdapter.OnDeleteClickListener() {
+            @Override
+            public void onDeleteClicked() {
+                if (mPin.length() > 0) {
+                    mPin = mPin.substring(0, mPin.length() - 1);
 
-                if (isIndicatorDotsAttached()) {
-                    mIndicatorDots.updateDot(mPin.length());
-                }
+                    if (isIndicatorDotsAttached()) {
+                        mIndicatorDots.updateDot(mPin.length());
+                    }
 
-                if (mPin.length() == 0) {
-                    mAdapter.setPinLength(mPin.length());
-                    mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
-                }
-
-                if (mPinLockListener != null) {
                     if (mPin.length() == 0) {
+                        mAdapter.setPinLength(mPin.length());
+                        mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
+                    }
+
+                    if (mPinLockListener != null) {
+                        if (mPin.length() == 0) {
+                            mPinLockListener.onEmpty();
+                            clearInternalPin();
+                        } else {
+                            mPinLockListener.onPinChange(mPin.length(), mPin);
+                        }
+                    }
+                } else {
+                    if (mPinLockListener != null) {
                         mPinLockListener.onEmpty();
-                        clearInternalPin();
-                    } else {
-                        mPinLockListener.onPinChange(mPin.length(), mPin);
                     }
                 }
-            } else {
+            }
+
+            @Override
+            public void onDeleteLongClicked() {
+                resetPinLockView();
                 if (mPinLockListener != null) {
                     mPinLockListener.onEmpty();
                 }
             }
-        }
-
-        @Override
-        public void onDeleteLongClicked() {
-            resetPinLockView();
-            if (mPinLockListener != null) {
-                mPinLockListener.onEmpty();
-            }
-        }
-    };
+        };
+    }
 
     public PinLockView(Context context) {
         super(context);
@@ -143,12 +165,18 @@ public class PinLockView extends RecyclerView {
             mVerticalSpacing = (int) typedArray.getDimension(R.styleable.PinLockView_keypadVerticalSpacing, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_vertical_spacing));
             mTextColor = typedArray.getColor(R.styleable.PinLockView_keypadTextColor, ResourceUtils.getColor(getContext(), R.color.white));
             mTextSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadTextSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_text_size));
+            mTextFontName = typedArray.getString(R.styleable.PinLockView_keypadTextFont);
+            mVibrateButtonClick = typedArray.getBoolean(R.styleable.PinLockView_keypadVibrateButtonClick, true);
             mButtonSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadButtonSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_button_size));
+            mButtonBackgroundId = typedArray.getResourceId(R.styleable.PinLockView_keypadButtonBackground, 0);
             mDeleteButtonSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadDeleteButtonSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_delete_button_size));
-            mButtonBackgroundDrawable = typedArray.getDrawable(R.styleable.PinLockView_keypadButtonBackgroundDrawable);
             mDeleteButtonDrawable = typedArray.getDrawable(R.styleable.PinLockView_keypadDeleteButtonDrawable);
-            mShowDeleteButton = typedArray.getBoolean(R.styleable.PinLockView_keypadShowDeleteButton, true);
             mDeleteButtonPressedColor = typedArray.getColor(R.styleable.PinLockView_keypadDeleteButtonPressedColor, ResourceUtils.getColor(getContext(), R.color.greyish));
+            mShowDeleteButton = typedArray.getBoolean(R.styleable.PinLockView_keypadShowDeleteButton, true);
+            mShowLeftButton = typedArray.getBoolean(R.styleable.PinLockView_keypadShowLeftButton, false);
+            mLeftButtonText = typedArray.getString(R.styleable.PinLockView_keypadLeftButtonText);
+            mLeftButtonTextSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadLeftButtonTextSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_text_size));
+            mAutoHideDeleteButton = typedArray.getBoolean(R.styleable.PinLockView_keypadAutoHideDeleteButton, true);
         } finally {
             typedArray.recycle();
         }
@@ -156,13 +184,18 @@ public class PinLockView extends RecyclerView {
         mCustomizationOptionsBundle = new CustomizationOptionsBundle();
         mCustomizationOptionsBundle.setTextColor(mTextColor);
         mCustomizationOptionsBundle.setTextSize(mTextSize);
+        mCustomizationOptionsBundle.setTextFontName(mTextFontName);
+        mCustomizationOptionsBundle.setVibrateButtonClick(mVibrateButtonClick);
         mCustomizationOptionsBundle.setButtonSize(mButtonSize);
-        mCustomizationOptionsBundle.setButtonBackgroundDrawable(mButtonBackgroundDrawable);
+        mCustomizationOptionsBundle.setButtonBackgroundId(mButtonBackgroundId);
         mCustomizationOptionsBundle.setDeleteButtonDrawable(mDeleteButtonDrawable);
         mCustomizationOptionsBundle.setDeleteButtonSize(mDeleteButtonSize);
+        mCustomizationOptionsBundle.setShowLeftButton(mShowLeftButton);
+        mCustomizationOptionsBundle.setLeftButtonText(mLeftButtonText);
+        mCustomizationOptionsBundle.setLeftButtonTextSize(mLeftButtonTextSize);
         mCustomizationOptionsBundle.setShowDeleteButton(mShowDeleteButton);
+        mCustomizationOptionsBundle.setAutoHideDeleteButton(mAutoHideDeleteButton);
         mCustomizationOptionsBundle.setDeleteButtonPressesColor(mDeleteButtonPressedColor);
-
         initView();
     }
 
@@ -170,14 +203,16 @@ public class PinLockView extends RecyclerView {
         setLayoutManager(new GridLayoutManager(getContext(), 3));
 
         mAdapter = new PinLockAdapter(getContext());
-        mAdapter.setOnItemClickListener(mOnNumberClickListener);
-        mAdapter.setOnDeleteClickListener(mOnDeleteClickListener);
+        mAdapter.setOnItemClickListener(createNumberClickListener());
+        mAdapter.setOnDeleteClickListener(createDeleteClickListener());
+        mAdapter.setOnLeftButtonClickListener(createLeftButtonClickListener());
         mAdapter.setCustomizationOptions(mCustomizationOptionsBundle);
         setAdapter(mAdapter);
 
         addItemDecoration(new ItemSpaceDecoration(mHorizontalSpacing, mVerticalSpacing, 3, false));
         setOverScrollMode(OVER_SCROLL_NEVER);
     }
+
 
     /**
      * Sets a {@link PinLockListener} to the to listen to pin update events
@@ -186,6 +221,15 @@ public class PinLockView extends RecyclerView {
      */
     public void setPinLockListener(PinLockListener pinLockListener) {
         this.mPinLockListener = pinLockListener;
+    }
+
+    /**
+     * Sets a {@link LeftButtonClickListener} to the to listen to left button update events
+     *
+     * @param leftButtonListener the listener
+     */
+    public void setOnClickButtonLeftListener(LeftButtonClickListener leftButtonListener) {
+        this.mLeftButtonListener = leftButtonListener;
     }
 
     /**
@@ -251,6 +295,45 @@ public class PinLockView extends RecyclerView {
     }
 
     /**
+     * Gets text font name.
+     *
+     * @return the text font name
+     */
+    public String getTextFontName() {
+        return mTextFontName;
+    }
+
+    /**
+     * Sets text font.
+     *
+     * @param fontPathName the font path name
+     */
+    public void setTextFont(String fontPathName) {
+        this.mTextFontName = fontPathName;
+        mCustomizationOptionsBundle.setTextFontName(fontPathName);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Is vibrate button click boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isVibrateButtonClick() {
+        return mVibrateButtonClick;
+    }
+
+    /**
+     * Sets vibrate button click.
+     *
+     * @param isVibrate the is vibrate
+     */
+    public void setVibrateButtonClick(boolean isVibrate) {
+        this.mVibrateButtonClick = isVibrate;
+        mCustomizationOptionsBundle.setVibrateButtonClick(isVibrate);
+    }
+
+    /**
      * Get the size of the pin buttons
      *
      * @return the size of the button in pixels
@@ -273,20 +356,20 @@ public class PinLockView extends RecyclerView {
     /**
      * Get the current background drawable of the buttons, can be null
      *
-     * @return the background drawable
+     * @return the background id
      */
-    public Drawable getButtonBackgroundDrawable() {
-        return mButtonBackgroundDrawable;
+    public int getButtonBackgroundDrawable() {
+        return mButtonBackgroundId;
     }
 
     /**
-     * Set the background drawable of the buttons dynamically
+     * Set the background id of the buttons dynamically
      *
-     * @param buttonBackgroundDrawable the background drawable
+     * @param id the background id
      */
-    public void setButtonBackgroundDrawable(Drawable buttonBackgroundDrawable) {
-        this.mButtonBackgroundDrawable = buttonBackgroundDrawable;
-        mCustomizationOptionsBundle.setButtonBackgroundDrawable(buttonBackgroundDrawable);
+    public void setButtonBackgroundId(int id) {
+        this.mButtonBackgroundId = id;
+        mCustomizationOptionsBundle.setButtonBackgroundId(id);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -370,6 +453,86 @@ public class PinLockView extends RecyclerView {
         mAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Is show left button boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isShowLeftButton() {
+        return mShowLeftButton;
+    }
+
+    /**
+     * Sets show left button.
+     *
+     * @param isShow  is show left button
+     */
+    public void setShowLeftButton(boolean isShow) {
+        this.mShowLeftButton = isShow;
+        mCustomizationOptionsBundle.setShowLeftButton(isShow);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Gets left button text.
+     *
+     * @return the left button text
+     */
+    public String getLeftButtonText() {
+        return mLeftButtonText;
+    }
+
+    /**
+     * Sets left button text.
+     *
+     * @param text the text show in left button
+     */
+    public void setLeftButtonText(String text) {
+        this.mLeftButtonText = text;
+        mCustomizationOptionsBundle.setLeftButtonText(text);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Gets left button text size.
+     *
+     * @return the left button text size
+     */
+    public int getLeftButtonTextSize() {
+        return mLeftButtonTextSize;
+    }
+
+    /**
+     * Sets left button text size.
+     *
+     * @param textSize the text size in left button
+     */
+    public void setLeftButtonTextSize(int textSize) {
+        this.mLeftButtonTextSize = textSize;
+        mCustomizationOptionsBundle.setLeftButtonTextSize(textSize);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Is auto hide delete button boolean.
+     *
+     * @return the boolean auto hide delete button
+     */
+    public boolean isAutoHideDeleteButton() {
+        return mAutoHideDeleteButton;
+    }
+
+    /**
+     * Sets auto hide delete button.
+     *
+     * @param isAutoHide the is auto hide delete button
+     */
+    public void setAutoHideDeleteButton(boolean isAutoHide) {
+        this.mAutoHideDeleteButton = isAutoHide;
+        mCustomizationOptionsBundle.setAutoHideDeleteButton(isAutoHide);
+        mAdapter.notifyDataSetChanged();
+    }
+
     private void clearInternalPin() {
         mPin = "";
     }
@@ -413,4 +576,5 @@ public class PinLockView extends RecyclerView {
             return "0";
         return String.valueOf((position + 1) % 10);
     }
+
 }

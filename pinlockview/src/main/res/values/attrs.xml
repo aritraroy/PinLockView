@@ -4,13 +4,19 @@
         <attr name="pinLength" format="integer" />
         <attr name="keypadTextColor" format="color" />
         <attr name="keypadTextSize" format="dimension" />
+        <attr name="keypadTextFont" format="string" />
+        <attr name="keypadVibrateButtonClick" format="boolean" />
         <attr name="keypadButtonSize" format="dimension" />
         <attr name="keypadVerticalSpacing" format="dimension" />
         <attr name="keypadHorizontalSpacing" format="dimension" />
-        <attr name="keypadButtonBackgroundDrawable" format="integer" />
+        <attr name="keypadButtonBackground" format="reference" />
         <attr name="keypadDeleteButtonDrawable" format="integer" />
         <attr name="keypadDeleteButtonSize" format="dimension" />
+        <attr name="keypadShowLeftButton" format="boolean" />
+        <attr name="keypadLeftButtonText" format="string" />
+        <attr name="keypadLeftButtonTextSize" format="dimension" />
         <attr name="keypadShowDeleteButton" format="boolean" />
+        <attr name="keypadAutoHideDeleteButton" format="boolean" />
         <attr name="keypadDeleteButtonPressedColor" format="color" />
 
         <attr name="dotEmptyBackground" format="reference" />
