@@ -9,6 +9,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
+import static android.R.attr.textSize;
+
 /**
  * Represents a numeric lock view which can used to taken numbers as input.
  * The length of the input can be customized using {@link PinLockView#setPinLength(int)}, the default value being 4
@@ -65,7 +67,7 @@ public class PinLockView extends RecyclerView {
 
                     if (mPin.length() == 1) {
                         mAdapter.setPinLength(mPin.length());
-                        mAdapter.notifyItemChanged(position);
+                        updateDeleteButton();
                     }
 
                     if (mPinLockListener != null) {
@@ -112,7 +114,7 @@ public class PinLockView extends RecyclerView {
 
                     if (mPin.length() == 0) {
                         mAdapter.setPinLength(mPin.length());
-                        mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
+                        updateDeleteButton();
                     }
 
                     if (mPinLockListener != null) {
@@ -138,6 +140,10 @@ public class PinLockView extends RecyclerView {
                 }
             }
         };
+    }
+
+    private void updateDeleteButton() {
+        mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
     }
 
     public PinLockView(Context context) {
@@ -546,7 +552,7 @@ public class PinLockView extends RecyclerView {
         clearInternalPin();
 
         mAdapter.setPinLength(mPin.length());
-        mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
+        updateDeleteButton();
 
         if (mIndicatorDots != null) {
             mIndicatorDots.updateDot(mPin.length());
