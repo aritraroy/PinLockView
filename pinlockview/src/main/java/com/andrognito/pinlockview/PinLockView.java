@@ -9,8 +9,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
-import static android.R.attr.textSize;
-
 /**
  * Represents a numeric lock view which can used to taken numbers as input.
  * The length of the input can be customized using {@link PinLockView#setPinLength(int)}, the default value being 4

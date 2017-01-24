@@ -16,12 +16,21 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <Button
+                android:layout_gravity="right"
+                android:id="@+id/btn_goto_example2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackgroundBorderless"
+                android:text="Eample2"
+                android:textAllCaps="false"/>
+
             <ImageView
                 android:id="@+id/profile_image"
                 android:layout_width="84dp"
                 android:layout_height="84dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="96dp"
+                android:layout_marginTop="72dp"
                 android:src="@drawable/img_no_avatar"/>
 
             <TextView

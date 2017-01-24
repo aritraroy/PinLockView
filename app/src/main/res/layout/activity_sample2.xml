@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#8EC63F"
+              tools:context="com.andrognito.pinlockviewapp.SampleActivity">
+
+    <android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.andrognito.pinlockviewapp.SampleActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context="com.andrognito.pinlockviewapp.SampleActivity">
+
+
+            <TextView
+                android:id="@+id/profile_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="96dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="Enter your passcode"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
+
+            <com.andrognito.pinlockview.IndicatorDots
+                android:id="@+id/indicator_dots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="36dp"
+                app:dotDiameter="12dp"
+                app:dotEmptyBackground="@drawable/shape_indicator_empty"
+                app:dotFilledBackground="@drawable/shape_indicator_select"/>
+
+            <com.andrognito.pinlockview.PinLockView
+                android:id="@+id/pin_lock_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="48dp"
+                android:fontFamily="sans-serif"
+                app:keypadButtonBackground="@drawable/selector_button_passcode_background"
+                app:keypadButtonSize="64dp"
+                app:keypadDeleteButtonPressedColor="#C8C8C8"
+                app:keypadDeleteButtonSize="24dp"
+                app:keypadHorizontalSpacing="24dp"
+                app:keypadLeftButtonText="Test"
+                app:keypadShowDeleteButton="true"
+                app:keypadShowLeftButton="true"
+                app:keypadTextColor="@color/white"
+                app:keypadTextFont="timeburnernormal.ttf"
+                app:keypadTextSize="24dp"
+                app:keypadVerticalSpacing="18dp"
+                app:keypadVibrateButtonClick="true"/>
+
+            <!--app:keypadLeftButtonTextSize=""-->
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>
+
