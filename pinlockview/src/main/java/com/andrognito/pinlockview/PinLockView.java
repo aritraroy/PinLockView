@@ -34,12 +34,12 @@ public class PinLockView extends RecyclerView {
     private PinLockListener mPinLockListener;
     private CustomizationOptionsBundle mCustomizationOptionsBundle;
 
-    private PinLockAdapter.OnNumberClickListener mOnNumberClickListener = new PinLockAdapter.OnNumberClickListener() {
+    private PinLockAdapter.OnNumberClickListener mOnNumberClickListener
+            = new PinLockAdapter.OnNumberClickListener() {
         @Override
-        public void onNumberClicked(int position) {
-            String key = getData(position);
+        public void onNumberClicked(int keyValue) {
             if (mPin.length() < getPinLength()) {
-                mPin = mPin.concat(key);
+                mPin = mPin.concat(String.valueOf(keyValue));
 
                 if (isIndicatorDotsAttached()) {
                     mIndicatorDots.updateDot(mPin.length());
@@ -60,7 +60,7 @@ public class PinLockView extends RecyclerView {
             } else {
                 if (!isShowDeleteButton()) {
                     resetPinLockView();
-                    mPin = mPin.concat(key);
+                    mPin = mPin.concat(String.valueOf(keyValue));
 
                     if (isIndicatorDotsAttached()) {
                         mIndicatorDots.updateDot(mPin.length());
@@ -79,7 +79,8 @@ public class PinLockView extends RecyclerView {
         }
     };
 
-    private PinLockAdapter.OnDeleteClickListener mOnDeleteClickListener = new PinLockAdapter.OnDeleteClickListener() {
+    private PinLockAdapter.OnDeleteClickListener mOnDeleteClickListener
+            = new PinLockAdapter.OnDeleteClickListener() {
         @Override
         public void onDeleteClicked() {
             if (mPin.length() > 0) {
@@ -406,11 +407,5 @@ public class PinLockView extends RecyclerView {
      */
     public void attachIndicatorDots(IndicatorDots mIndicatorDots) {
         this.mIndicatorDots = mIndicatorDots;
-    }
-
-    public String getData(int position) {
-        if (position == 10)
-            return "0";
-        return String.valueOf((position + 1) % 10);
     }
 }
