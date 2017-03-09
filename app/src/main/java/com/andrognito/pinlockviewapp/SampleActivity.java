@@ -47,6 +47,7 @@ public class SampleActivity extends AppCompatActivity {
 
         mPinLockView.attachIndicatorDots(mIndicatorDots);
         mPinLockView.setPinLockListener(mPinLockListener);
+        mPinLockView.setCustomKeySet(new int[]{2, 3, 1, 5, 9, 6, 7, 0, 8, 4});
 
         mPinLockView.setPinLength(6);
         mPinLockView.setTextColor(getResources().getColor(R.color.white));

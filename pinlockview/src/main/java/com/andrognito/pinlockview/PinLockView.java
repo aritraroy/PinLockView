@@ -33,6 +33,7 @@ public class PinLockView extends RecyclerView {
     private PinLockAdapter mAdapter;
     private PinLockListener mPinLockListener;
     private CustomizationOptionsBundle mCustomizationOptionsBundle;
+    private int[] mCustomKeySet;
 
     private PinLockAdapter.OnNumberClickListener mOnNumberClickListener
             = new PinLockAdapter.OnNumberClickListener() {
@@ -369,6 +370,18 @@ public class PinLockView extends RecyclerView {
         this.mDeleteButtonPressedColor = deleteButtonPressedColor;
         mCustomizationOptionsBundle.setDeleteButtonPressesColor(deleteButtonPressedColor);
         mAdapter.notifyDataSetChanged();
+    }
+
+    public int[] getCustomKeySet() {
+        return mCustomKeySet;
+    }
+
+    public void setCustomKeySet(int[] customKeySet) {
+        this.mCustomKeySet = customKeySet;
+
+        if (mAdapter != null) {
+            mAdapter.setKeyValues(customKeySet);
+        }
     }
 
     private void clearInternalPin() {

@@ -35,11 +35,6 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mKeyValues = getAdjustKeyValues(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 0});
     }
 
-    public PinLockAdapter(Context context, int[] keyValues) {
-        this.mContext = context;
-        this.mKeyValues = getAdjustKeyValues(keyValues);
-    }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder;
@@ -135,6 +130,15 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public void setPinLength(int pinLength) {
         this.mPinLength = pinLength;
+    }
+
+    public int[] getKeyValues() {
+        return mKeyValues;
+    }
+
+    public void setKeyValues(int[] keyValues) {
+        this.mKeyValues = getAdjustKeyValues(keyValues);
+        notifyDataSetChanged();
     }
 
     private int[] getAdjustKeyValues(int[] keyValues) {
