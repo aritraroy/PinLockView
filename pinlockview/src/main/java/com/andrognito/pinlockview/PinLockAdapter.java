@@ -171,45 +171,47 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             mDeleteButton = (LinearLayout) itemView.findViewById(R.id.button);
             mButtonImage = (ImageView) itemView.findViewById(R.id.buttonImage);
 
-            mDeleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mOnDeleteClickListener != null) {
-                        mOnDeleteClickListener.onDeleteClicked();
-                    }
-                }
-            });
-
-            mDeleteButton.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    if (mOnDeleteClickListener != null) {
-                        mOnDeleteClickListener.onDeleteLongClicked();
-                    }
-                    return true;
-                }
-            });
-
-            mDeleteButton.setOnTouchListener(new View.OnTouchListener() {
-                private Rect rect;
-
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if(event.getAction() == MotionEvent.ACTION_DOWN){
-                        mButtonImage.setColorFilter(mCustomizationOptionsBundle.getDeleteButtonPressesColor());
-                        rect = new Rect(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
-                    }
-                    if(event.getAction() == MotionEvent.ACTION_UP){
-                        mButtonImage.clearColorFilter();
-                    }
-                    if(event.getAction() == MotionEvent.ACTION_MOVE){
-                        if(!rect.contains(v.getLeft() + (int) event.getX(), v.getTop() + (int) event.getY())){
-                            mButtonImage.clearColorFilter();
+            if (mCustomizationOptionsBundle.isShowDeleteButton() && mPinLength > 0) {
+                mDeleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mOnDeleteClickListener != null) {
+                            mOnDeleteClickListener.onDeleteClicked();
                         }
                     }
-                    return false;
-                }
-            });
+                });
+
+                mDeleteButton.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        if (mOnDeleteClickListener != null) {
+                            mOnDeleteClickListener.onDeleteLongClicked();
+                        }
+                        return true;
+                    }
+                });
+
+                mDeleteButton.setOnTouchListener(new View.OnTouchListener() {
+                    private Rect rect;
+
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                            mButtonImage.setColorFilter(mCustomizationOptionsBundle.getDeleteButtonPressesColor());
+                            rect = new Rect(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
+                        }
+                        if (event.getAction() == MotionEvent.ACTION_UP) {
+                            mButtonImage.clearColorFilter();
+                        }
+                        if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                            if (!rect.contains(v.getLeft() + (int) event.getX(), v.getTop() + (int) event.getY())) {
+                                mButtonImage.clearColorFilter();
+                            }
+                        }
+                        return false;
+                    }
+                });
+            }
         }
     }
 
