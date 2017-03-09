@@ -62,10 +62,12 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (holder != null) {
             if (position == 10) {
                 holder.mNumberButton.setText("0");
+                holder.mNumberButton.setVisibility(View.VISIBLE);
             } else if (position == 9) {
                 holder.mNumberButton.setVisibility(View.INVISIBLE);
             } else {
                 holder.mNumberButton.setText(String.valueOf((position + 1) % 10));
+                holder.mNumberButton.setVisibility(View.VISIBLE);
             }
 
             if (mCustomizationOptionsBundle != null) {
