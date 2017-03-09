@@ -19,6 +19,7 @@ import android.util.AttributeSet;
 public class PinLockView extends RecyclerView {
 
     private static final int DEFAULT_PIN_LENGTH = 4;
+    private static final int[] DEFAULT_KEY_SET = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
 
     private String mPin = "";
     private int mPinLength;
@@ -381,6 +382,14 @@ public class PinLockView extends RecyclerView {
 
         if (mAdapter != null) {
             mAdapter.setKeyValues(customKeySet);
+        }
+    }
+
+    public void enableLayoutShuffling() {
+        this.mCustomKeySet = ShuffleArrayUtils.shuffle(DEFAULT_KEY_SET);
+
+        if (mAdapter != null) {
+            mAdapter.setKeyValues(mCustomKeySet);
         }
     }
 
