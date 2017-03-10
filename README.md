@@ -3,6 +3,9 @@
 # PinLockView
 A clean, minimalistic, easy-to-use and highly customizable pin lock custom view for Android.
 
+### Specs
+[ ![Download](https://api.bintray.com/packages/aritraroy/maven/pin-lock-view/images/download.svg) ](https://bintray.com/aritraroy/maven/pin-lock-view/_latestVersion) [![API](https://img.shields.io/badge/API-11%2B-orange.svg?style=flat)](https://android-arsenal.com/api?level=11) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 ![PinLockView](https://github.com/aritraroy/PinLockView/blob/master/screens/logo.png)
 
 This library allows you to implement a pin lock mechanism in your app **easily and quickly**. There are **plenty of customization options** available to change the look-and-feel of this view to match your app's theme.
@@ -20,7 +23,7 @@ This library is available in **jCenter** which is the default Maven repository u
 dependencies {
     // other dependencies here
     
-    compile 'com.andrognito.pinlockview:pinlockview:1.0.1'
+    compile 'com.andrognito.pinlockview:pinlockview:2.0.0'
 }
 ```
 
@@ -30,7 +33,7 @@ dependencies {
 <dependency>
   <groupId>com.andrognito.pinlockview</groupId>
   <artifactId>pinlockview</artifactId>
-  <version>1.0.1</version>
+  <version>2.0.0</version>
   <type>pom</type>
 </dependency>
 ```
