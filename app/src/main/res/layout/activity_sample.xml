@@ -12,7 +12,7 @@
         android:layout_width="84dp"
         android:layout_height="84dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="104dp"
         android:src="@drawable/img_no_avatar" />
 
     <TextView
@@ -35,8 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/profile_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
-        app:indicatorType="fill" />
+        android:layout_marginTop="36dp" />
 
     <com.andrognito.pinlockview.PinLockView
         android:id="@+id/pin_lock_view"

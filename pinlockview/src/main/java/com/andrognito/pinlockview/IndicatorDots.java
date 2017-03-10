@@ -3,10 +3,14 @@ package com.andrognito.pinlockview;
 import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.IntDef;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * It represents a set of indicator dots which when attached with {@link PinLockView}
@@ -15,6 +19,14 @@ import android.widget.LinearLayout;
  * Created by aritraroy on 01/06/16.
  */
 public class IndicatorDots extends LinearLayout {
+
+    @IntDef({IndicatorType.FIXED, IndicatorType.FILL, IndicatorType.FILL_WITH_ANIMATION})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface IndicatorType {
+        int FIXED = 0;
+        int FILL = 1;
+        int FILL_WITH_ANIMATION = 2;
+    }
 
     private static final int DEFAULT_PIN_LENGTH = 4;
 
@@ -48,7 +60,8 @@ public class IndicatorDots extends LinearLayout {
             mEmptyDrawable = typedArray.getResourceId(R.styleable.PinLockView_dotEmptyBackground,
                     R.drawable.dot_empty);
             mPinLength = typedArray.getInt(R.styleable.PinLockView_pinLength, DEFAULT_PIN_LENGTH);
-            mIndicatorType = typedArray.getInt(R.styleable.PinLockView_indicatorType, 0);
+            mIndicatorType = typedArray.getInt(R.styleable.PinLockView_indicatorType,
+                    IndicatorType.FIXED);
         } finally {
             typedArray.recycle();
         }
@@ -69,7 +82,7 @@ public class IndicatorDots extends LinearLayout {
 
                 addView(dot);
             }
-        } else {
+        } else if (mIndicatorType == 2) {
             setLayoutTransition(new LayoutTransition());
         }
     }
@@ -77,7 +90,8 @@ public class IndicatorDots extends LinearLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (mIndicatorType == 1) {
+        // If the indicator type is not fixed
+        if (mIndicatorType != 0) {
             ViewGroup.LayoutParams params = this.getLayoutParams();
             params.height = mDotDiameter;
             requestLayout();
@@ -138,6 +152,18 @@ public class IndicatorDots extends LinearLayout {
 
     public void setPinLength(int pinLength) {
         this.mPinLength = pinLength;
+        removeAllViews();
+        initView(getContext());
+    }
+
+    public
+    @IndicatorType
+    int getIndicatorType() {
+        return mIndicatorType;
+    }
+
+    public void setIndicatorType(@IndicatorType int type) {
+        this.mIndicatorType = type;
         removeAllViews();
         initView(getContext());
     }

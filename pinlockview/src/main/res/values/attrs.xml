@@ -20,6 +20,7 @@
         <attr name="indicatorType" format="enum">
             <enum name="fixed" value="0" />
             <enum name="fill" value="1" />
+            <enum name="fillWithAnimation" value="2" />
         </attr>
 
     </declare-styleable>
