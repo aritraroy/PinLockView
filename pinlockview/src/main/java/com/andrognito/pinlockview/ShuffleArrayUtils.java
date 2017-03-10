@@ -13,7 +13,7 @@ public class ShuffleArrayUtils {
      *
      * @param array
      */
-    public static int[] shuffle(int[] array) {
+    static int[] shuffle(int[] array) {
         int length = array.length;
         Random random = new Random();
         random.nextInt();

@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 /**
  * It represents a set of indicator dots which when attached with {@link PinLockView}
  * can be used to indicate the current length of the input
- *
+ * <p>
  * Created by aritraroy on 01/06/16.
  */
 public class IndicatorDots extends LinearLayout {
@@ -21,6 +21,9 @@ public class IndicatorDots extends LinearLayout {
     private int mFillDrawable;
     private int mEmptyDrawable;
     private int mPinLength;
+    private int mIndicatorType;
+
+    private int mPreviousLength;
 
     public IndicatorDots(Context context) {
         this(context, null);
@@ -38,9 +41,12 @@ public class IndicatorDots extends LinearLayout {
         try {
             mDotDiameter = (int) typedArray.getDimension(R.styleable.PinLockView_dotDiameter, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_dot_diameter));
             mDotSpacing = (int) typedArray.getDimension(R.styleable.PinLockView_dotSpacing, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_dot_spacing));
-            mFillDrawable = typedArray.getResourceId(R.styleable.PinLockView_dotFilledBackground, R.drawable.dot_filled);
-            mEmptyDrawable = typedArray.getResourceId(R.styleable.PinLockView_dotEmptyBackground, R.drawable.dot_empty);
+            mFillDrawable = typedArray.getResourceId(R.styleable.PinLockView_dotFilledBackground,
+                    R.drawable.dot_filled);
+            mEmptyDrawable = typedArray.getResourceId(R.styleable.PinLockView_dotEmptyBackground,
+                    R.drawable.dot_empty);
             mPinLength = typedArray.getInt(R.styleable.PinLockView_pinLength, DEFAULT_PIN_LENGTH);
+            mIndicatorType = typedArray.getInt(R.styleable.PinLockView_indicatorType, 0);
         } finally {
             typedArray.recycle();
         }
@@ -49,46 +55,59 @@ public class IndicatorDots extends LinearLayout {
     }
 
     private void initDots(Context context) {
+        if (mIndicatorType == 0) {
+            for (int i = 0; i < mPinLength; i++) {
+                View dot = new View(context);
+                emptyDot(dot);
 
-        for (int i = 0; i < mPinLength; i++) {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mDotDiameter,
+                        mDotDiameter);
+                params.setMargins(mDotSpacing, 0, mDotSpacing, 0);
+                dot.setLayoutParams(params);
 
-            View dot = new View(context);
-            emptyDot(dot);
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mDotDiameter, mDotDiameter);
-            params.setMargins(mDotSpacing, 0, mDotSpacing, 0);
-            dot.setLayoutParams(params);
-
-            addView(dot);
+                addView(dot);
+            }
         }
     }
 
     void updateDot(int length) {
-
-        if (length > 0) {
-
-            for (int i = 0; i < getChildCount(); i++) {
-                View v = getChildAt(i);
-                emptyDot(v);
-            }
-
-            for (int i = 0; i < length; i++) {
-                View v = getChildAt(i);
-                if (v != null) {
-                    fillDot(v);
+        if (mIndicatorType == 0) {
+            if (length > 0) {
+                if (length > mPreviousLength) {
+                    fillDot(getChildAt(length - 1));
+                } else {
+                    emptyDot(getChildAt(length));
                 }
+                mPreviousLength = length;
+            } else {
+                // When {@code mPinLength} is 0, we need to reset all the views back to empty
+                for (int i = 0; i < getChildCount(); i++) {
+                    View v = getChildAt(i);
+                    emptyDot(v);
+                }
+                mPreviousLength = 0;
             }
         } else {
+            if (length > 0) {
+                if (length > mPreviousLength) {
+                    View dot = new View(getContext());
+                    fillDot(dot);
 
-            /**
-             * When {@code mPinLength} is 0, we need to reset all the views back to empty
-             */
-            for (int i = 0; i < getChildCount(); i++) {
-                View v = getChildAt(i);
-                emptyDot(v);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mDotDiameter,
+                            mDotDiameter);
+                    params.setMargins(mDotSpacing, 0, mDotSpacing, 0);
+                    dot.setLayoutParams(params);
+
+                    addView(dot, length - 1);
+                } else {
+                    removeViewAt(length);
+                }
+                mPreviousLength = length;
+            } else {
+                removeAllViews();
+                mPreviousLength = 0;
             }
         }
-
     }
 
     private void emptyDot(View dot) {
