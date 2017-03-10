@@ -1,10 +1,8 @@
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PinLockView-green.svg?style=true)](https://android-arsenal.com/details/1/3706)
-
 # PinLockView
 A clean, minimalistic, easy-to-use and highly customizable pin lock custom view for Android.
 
 ### Specs
-[ ![Download](https://api.bintray.com/packages/aritraroy/maven/pin-lock-view/images/download.svg) ](https://bintray.com/aritraroy/maven/pin-lock-view/_latestVersion) [![API](https://img.shields.io/badge/API-11%2B-orange.svg?style=flat)](https://android-arsenal.com/api?level=11) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[ ![Download](https://api.bintray.com/packages/aritraroy/maven/pin-lock-view/images/download.svg) ](https://bintray.com/aritraroy/maven/pin-lock-view/_latestVersion) [![API](https://img.shields.io/badge/API-11%2B-orange.svg?style=flat)](https://android-arsenal.com/api?level=11) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PinLockView-green.svg?style=true)](https://android-arsenal.com/details/1/3706)
 
 ![PinLockView](https://github.com/aritraroy/PinLockView/blob/master/screens/logo.png)
 
@@ -131,12 +129,16 @@ There are several theming options available through XML attributes which you can
   app:dotFilledBackground"@drawable/filled"               // Customize the filled state of the dots
   app:dotDiameter="12dp"                                  // Change the diameter of the dots
   app:dotSpacing="16dp"                                   // Change the spacing between individual dots
+  app:indicatorType="fillWithAnimation"                   // Choose between "fixed", "fill" and "fillWithAnimation"
 ```
 
-# Author
+# About The Author
 
-**Aritra Roy** - aritra.roy.in@gmail.com
-**Play Store** - <a href="https://play.google.com/store/apps/details?id=com.codexapps.andrognito">Andrognito</a>
+### Aritra Roy
+**Email** - aritra.roy.in@gmail.com
+**Play Store App** - [Andrognito 3](https://play.google.com/store/apps/details?id=com.codexapps.andrognito)
+
+[[Blog](https://blog.aritraroy.in/) | [StackOverflow](http://stackoverflow.com/users/2858654/aritra-roy) | [Twitter](https://twitter.com/aritraroy93)]
 
 # Contribution
 
@@ -145,7 +147,7 @@ This library is quite exhaustive and offers a lot of customization options. If y
 # License
 
 ```
-Copyright 2014 aritraroy
+Copyright 2017 aritraroy
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
