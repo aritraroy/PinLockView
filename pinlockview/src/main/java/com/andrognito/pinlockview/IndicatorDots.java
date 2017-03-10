@@ -1,9 +1,11 @@
 package com.andrognito.pinlockview;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 /**
@@ -51,10 +53,10 @@ public class IndicatorDots extends LinearLayout {
             typedArray.recycle();
         }
 
-        initDots(context);
+        initView(context);
     }
 
-    private void initDots(Context context) {
+    private void initView(Context context) {
         if (mIndicatorType == 0) {
             for (int i = 0; i < mPinLength; i++) {
                 View dot = new View(context);
@@ -67,6 +69,18 @@ public class IndicatorDots extends LinearLayout {
 
                 addView(dot);
             }
+        } else {
+            setLayoutTransition(new LayoutTransition());
+        }
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (mIndicatorType == 1) {
+            ViewGroup.LayoutParams params = this.getLayoutParams();
+            params.height = mDotDiameter;
+            requestLayout();
         }
     }
 
@@ -125,6 +139,6 @@ public class IndicatorDots extends LinearLayout {
     public void setPinLength(int pinLength) {
         this.mPinLength = pinLength;
         removeAllViews();
-        initDots(getContext());
+        initView(getContext());
     }
 }

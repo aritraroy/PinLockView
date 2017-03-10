@@ -36,7 +36,7 @@
         android:layout_below="@id/profile_name"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp"
-        app:indicatorType="filling" />
+        app:indicatorType="fill" />
 
     <com.andrognito.pinlockview.PinLockView
         android:id="@+id/pin_lock_view"
@@ -46,7 +46,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         app:keypadButtonSize="72dp"
-        app:keypadShowDeleteButton="false"
+        app:keypadShowDeleteButton="true"
         app:keypadTextColor="@color/white"
         app:keypadTextSize="18dp" />
 
