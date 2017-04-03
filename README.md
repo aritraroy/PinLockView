@@ -132,17 +132,20 @@ There are several theming options available through XML attributes which you can
   app:indicatorType="fillWithAnimation"                   // Choose between "fixed", "fill" and "fillWithAnimation"
 ```
 
-# About The Author
-
-### Aritra Roy
-**Email** - aritra.roy.in@gmail.com
-**Play Store App** - [Andrognito 3](https://play.google.com/store/apps/details?id=com.codexapps.andrognito)
-
-[[Blog](https://blog.aritraroy.in/) | [StackOverflow](http://stackoverflow.com/users/2858654/aritra-roy) | [Twitter](https://twitter.com/aritraroy93)]
-
 # Contribution
 
 This library is quite exhaustive and offers a lot of customization options. If you find a bug or would like to improve any aspect of it, feel free to contribute with pull requests.
+
+# About The Author
+
+### Aritra Roy
+
+Android & Backend Developer. Blogger. Designer. Fitness Enthusiast.
+
+<a href="https://play.google.com/store/apps/details?id=com.codexapps.andrognito&hl=en" target="_blank"><img src="https://github.com/aritraroy/social-icons/blob/master/play-store-icon.png?raw=true" width="60"></a> <a href="https://blog.aritraroy.in/" target="_blank"><img src="https://github.com/aritraroy/social-icons/blob/master/medium-icon.png?raw=true" width="60"></a>
+<a href="http://stackoverflow.com/users/2858654/aritra-roy" target="_blank"><img src="https://github.com/aritraroy/social-icons/blob/master/stackoverflow-icon.png?raw=true" width="60"></a>
+<a href="https://twitter.com/aritraroy93" target="_blank"><img src="https://github.com/aritraroy/social-icons/blob/master/twitter-icon.png?raw=true" width="60"></a>
+
 
 # License
 
