@@ -114,8 +114,10 @@ There are several theming options available through XML attributes which you can
 
 ```xml
   app:pinLength="6"                                       // Change the pin length
-  app:keypadTextColor="#E6E6E6"                           // Change the color of the keypad text
-  app:keypadTextSize="16dp"                               // Change the text size in the keypad
+  app:keypadNumbersTextColor="#E6E6E6"                    // Change the color of the keypad numbers
+  app:keypadNumbersTextSize="16dp"                        // Change the text size of the keypad numbers
+  app:keypadLettersTextColor="#E6E6E6"                    // Change the color of the keypad alphabetical text
+  app:keypadLettersTextSize="16dp"                        // Change the text size of the keypad alphabetical text
   app:keypadButtonSize="72dp"                             // Change the size of individual keys/buttons
   app:keypadVerticalSpacing="24dp"                        // Alters the vertical spacing between the keypad buttons
   app:keypadHorizontalSpacing="36dp"                      // Alters the horizontal spacing between the keypad buttons
