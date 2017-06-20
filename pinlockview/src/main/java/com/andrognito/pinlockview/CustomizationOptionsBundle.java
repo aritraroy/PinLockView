@@ -10,8 +10,10 @@ import android.graphics.drawable.Drawable;
  */
 public class CustomizationOptionsBundle {
 
-    private int textColor;
-    private int textSize;
+    private int numberTextColor;
+    private int lettersTextColor;
+    private int numberTextSize;
+    private int lettersTextSize;
     private int buttonSize;
     private Drawable buttonBackgroundDrawable;
     private Drawable deleteButtonDrawable;
@@ -22,20 +24,36 @@ public class CustomizationOptionsBundle {
     public CustomizationOptionsBundle() {
     }
 
-    public int getTextColor() {
-        return textColor;
+    public int getNumbersTextColor() {
+        return numberTextColor;
     }
 
-    public void setTextColor(int textColor) {
-        this.textColor = textColor;
+    public void setNumbersTextColor(int textColor) {
+        this.numberTextColor = textColor;
     }
 
-    public int getTextSize() {
-        return textSize;
+    public int getLettersTextColor() {
+        return lettersTextColor;
     }
 
-    public void setTextSize(int textSize) {
-        this.textSize = textSize;
+    public void setLettersTextColor(int textColor) {
+        this.lettersTextColor = textColor;
+    }
+
+    public int getNumbersTextSize() {
+        return numberTextSize;
+    }
+
+    public void setNumbersTextSize(int textSize) {
+        this.numberTextSize = textSize;
+    }
+
+    public int getLettersTextSize() {
+        return lettersTextSize;
+    }
+
+    public void setLettersTextSize(int textSize) {
+        this.lettersTextSize = textSize;
     }
 
     public int getButtonSize() {

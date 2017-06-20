@@ -44,9 +44,13 @@
         android:layout_below="@id/indicator_dots"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        app:keypadButtonSize="72dp"
         app:keypadShowDeleteButton="true"
-        app:keypadTextColor="@color/white"
-        app:keypadTextSize="18dp" />
+        app:keypadNumbersTextColor="@color/white"
+        app:keypadLettersTextColor="@color/greyish"
+        app:keypadNumbersTextSize="32dp"
+        app:keypadLettersTextSize="10dp"
+        app:keypadDeleteButtonSize="27dp"
+        app:keypadVerticalSpacing="15dp"
+        app:keypadHorizontalSpacing="40dp" />
 
 </RelativeLayout>
