@@ -9,6 +9,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.graphics.Typeface;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -70,6 +71,7 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 holder.letters.setVisibility(View.GONE);
             } else {
                 holder.number.setText(String.valueOf(mKeyValues[position]));
+                holder.number.setTypeface(null, Typeface.BOLD);
                 holder.letters.setVisibility(View.VISIBLE);
                 switch (mKeyValues[position]) {
                     case 1:
@@ -281,12 +283,14 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             rect = new Rect(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
                         }
                         if (event.getAction() == MotionEvent.ACTION_UP) {
-                            mButtonImage.clearColorFilter();
+                            mButtonImage.setColorFilter(mCustomizationOptionsBundle.getNumbersTextColor(),
+                        PorterDuff.Mode.SRC_ATOP);
                         }
                         if (event.getAction() == MotionEvent.ACTION_MOVE) {
                             if (!rect.contains(v.getLeft() + (int) event.getX(),
                                     v.getTop() + (int) event.getY())) {
-                                mButtonImage.clearColorFilter();
+                                mButtonImage.setColorFilter(mCustomizationOptionsBundle.getNumbersTextColor(),
+                        PorterDuff.Mode.SRC_ATOP);
                             }
                         }
                         return false;
