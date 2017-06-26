@@ -2,8 +2,10 @@
 <resources>
     <declare-styleable name="PinLockView">
         <attr name="pinLength" format="integer" />
-        <attr name="keypadTextColor" format="color" />
-        <attr name="keypadTextSize" format="dimension" />
+        <attr name="keypadNumbersTextColor" format="color" />
+        <attr name="keypadLettersTextColor" format="color" />
+        <attr name="keypadNumbersTextSize" format="dimension" />
+        <attr name="keypadLettersTextSize" format="dimension" />
         <attr name="keypadButtonSize" format="dimension" />
         <attr name="keypadVerticalSpacing" format="dimension" />
         <attr name="keypadHorizontalSpacing" format="dimension" />

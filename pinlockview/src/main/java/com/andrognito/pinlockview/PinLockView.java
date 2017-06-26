@@ -24,8 +24,8 @@ public class PinLockView extends RecyclerView {
     private String mPin = "";
     private int mPinLength;
     private int mHorizontalSpacing, mVerticalSpacing;
-    private int mTextColor, mDeleteButtonPressedColor;
-    private int mTextSize, mButtonSize, mDeleteButtonSize;
+    private int mNumbersTextColor, mLettersTextColor, mDeleteButtonPressedColor;
+    private int mNumbersTextSize, mLettersTextSize, mButtonSize, mDeleteButtonSize;
     private Drawable mButtonBackgroundDrawable;
     private Drawable mDeleteButtonDrawable;
     private boolean mShowDeleteButton;
@@ -144,8 +144,10 @@ public class PinLockView extends RecyclerView {
             mPinLength = typedArray.getInt(R.styleable.PinLockView_pinLength, DEFAULT_PIN_LENGTH);
             mHorizontalSpacing = (int) typedArray.getDimension(R.styleable.PinLockView_keypadHorizontalSpacing, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_horizontal_spacing));
             mVerticalSpacing = (int) typedArray.getDimension(R.styleable.PinLockView_keypadVerticalSpacing, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_vertical_spacing));
-            mTextColor = typedArray.getColor(R.styleable.PinLockView_keypadTextColor, ResourceUtils.getColor(getContext(), R.color.white));
-            mTextSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadTextSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_text_size));
+            mNumbersTextColor = typedArray.getColor(R.styleable.PinLockView_keypadNumbersTextColor, ResourceUtils.getColor(getContext(), R.color.white));
+            mLettersTextColor = typedArray.getColor(R.styleable.PinLockView_keypadLettersTextColor, ResourceUtils.getColor(getContext(), R.color.white));
+            mNumbersTextSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadNumbersTextSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_text_size));
+            mLettersTextSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadLettersTextSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_text_size));
             mButtonSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadButtonSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_button_size));
             mDeleteButtonSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadDeleteButtonSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_delete_button_size));
             mButtonBackgroundDrawable = typedArray.getDrawable(R.styleable.PinLockView_keypadButtonBackgroundDrawable);
@@ -157,8 +159,10 @@ public class PinLockView extends RecyclerView {
         }
 
         mCustomizationOptionsBundle = new CustomizationOptionsBundle();
-        mCustomizationOptionsBundle.setTextColor(mTextColor);
-        mCustomizationOptionsBundle.setTextSize(mTextSize);
+        mCustomizationOptionsBundle.setNumbersTextColor(mNumbersTextColor);
+        mCustomizationOptionsBundle.setLettersTextColor(mLettersTextColor);
+        mCustomizationOptionsBundle.setNumbersTextSize(mNumbersTextSize);
+        mCustomizationOptionsBundle.setLettersTextSize(mLettersTextSize);
         mCustomizationOptionsBundle.setButtonSize(mButtonSize);
         mCustomizationOptionsBundle.setButtonBackgroundDrawable(mButtonBackgroundDrawable);
         mCustomizationOptionsBundle.setDeleteButtonDrawable(mDeleteButtonDrawable);
@@ -218,8 +222,8 @@ public class PinLockView extends RecyclerView {
      *
      * @return the text color
      */
-    public int getTextColor() {
-        return mTextColor;
+    public int getNumbersTextColor() {
+        return mNumbersTextColor;
     }
 
     /**
@@ -227,29 +231,69 @@ public class PinLockView extends RecyclerView {
      *
      * @param textColor the text color
      */
-    public void setTextColor(int textColor) {
-        this.mTextColor = textColor;
-        mCustomizationOptionsBundle.setTextColor(textColor);
+    public void setNumbersTextColor(int textColor) {
+        this.mNumbersTextColor = textColor;
+        mCustomizationOptionsBundle.setNumbersTextColor(textColor);
         mAdapter.notifyDataSetChanged();
     }
 
     /**
-     * Get the size of the text in the buttons
+     * Get the text color in the buttons
      *
-     * @return the size of the text in pixels
+     * @return the text color
      */
-    public int getTextSize() {
-        return mTextSize;
+    public int getLettersTextColor() {
+        return mLettersTextColor;
     }
 
     /**
-     * Set the size of text in pixels
+     * Set the text color of the buttons dynamically
+     *
+     * @param textColor the text color
+     */
+    public void setLettersTextColor(int textColor) {
+        this.mLettersTextColor = textColor;
+        mCustomizationOptionsBundle.setLettersTextColor(textColor);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Get the size of the numerical text in the buttons
+     *
+     * @return the size of the text in pixels
+     */
+    public int getNumbersTextSize() {
+        return mNumbersTextSize;
+    }
+
+    /**
+     * Set the size of numerical text in pixels
      *
      * @param textSize the text size in pixels
      */
-    public void setTextSize(int textSize) {
-        this.mTextSize = textSize;
-        mCustomizationOptionsBundle.setTextSize(textSize);
+    public void setNumbersTextSize(int textSize) {
+        this.mNumbersTextSize = textSize;
+        mCustomizationOptionsBundle.setNumbersTextSize(textSize);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Get the size of the alphabetical text in the buttons
+     *
+     * @return the size of the text in pixels
+     */
+    public int getLettersTextSize() {
+        return mLettersTextSize;
+    }
+
+    /**
+     * Set the size of the alphabetical text in pixels
+     *
+     * @param textSize the text size in pixels
+     */
+    public void setLettersTextSize(int textSize) {
+        this.mLettersTextSize = textSize;
+        mCustomizationOptionsBundle.setLettersTextSize(textSize);
         mAdapter.notifyDataSetChanged();
     }
 
