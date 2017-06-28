@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.graphics.Typeface;
 
 /**
  * Created by aritraroy on 31/05/16.
@@ -65,14 +67,76 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (holder != null) {
             if (position == 9) {
                 holder.mNumberButton.setVisibility(View.GONE);
+                holder.number.setVisibility(View.GONE);
+                holder.letters.setVisibility(View.GONE);
             } else {
-                holder.mNumberButton.setText(String.valueOf(mKeyValues[position]));
+                holder.number.setText(String.valueOf(mKeyValues[position]));
                 holder.mNumberButton.setVisibility(View.VISIBLE);
+                holder.number.setVisibility(View.VISIBLE);
                 holder.mNumberButton.setTag(mKeyValues[position]);
+
             }
 
             if (mCustomizationOptionsBundle != null) {
-                holder.mNumberButton.setTextColor(mCustomizationOptionsBundle.getTextColor());
+                // Set text colors
+                holder.number.setTextColor(mCustomizationOptionsBundle.getNumbersTextColor());
+                holder.letters.setTextColor(mCustomizationOptionsBundle.getLettersTextColor());
+
+                // Set text sizes
+                holder.number.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                        mCustomizationOptionsBundle.getNumbersTextSize());
+                holder.letters.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                        mCustomizationOptionsBundle.getLettersTextSize());
+
+                // Set up letters
+                if (mCustomizationOptionsBundle.getShowLetters()) {
+                    holder.letters.setVisibility(View.VISIBLE);
+                    if (holder != null && position != 9) {
+                        switch (mKeyValues[position]) {
+                            case 1:
+                                holder.letters.setVisibility(View.INVISIBLE);
+                                break;
+                            case 2:
+                                holder.letters.setText("A B C");
+                                break;
+                            case 3:
+                                holder.letters.setText("D E F");
+                                break;
+                            case 4:
+                                holder.letters.setText("G H I");
+                                break;
+                            case 5:
+                                holder.letters.setText("J K L");
+                                break;
+                            case 6:
+                                holder.letters.setText("M N O");
+                                break;
+                            case 7:
+                                holder.letters.setText("P Q R S");
+                                break;
+                            case 8:
+                                holder.letters.setText("T U V");
+                                break;
+                            case 9:
+                                holder.letters.setText("W X Y Z");
+                                break;
+                            case 0:
+                                holder.letters.setVisibility(View.GONE);
+                                break;
+                        }
+                    }
+                }
+
+                // Set boldness of text
+                if (mCustomizationOptionsBundle.getIsNumbersTextBold()) {
+                    holder.number.setTypeface(null, Typeface.BOLD);
+                }
+
+                if (mCustomizationOptionsBundle.getIsLettersTextBold()) {
+                    holder.letters.setTypeface(null, Typeface.BOLD);
+                }
+
+                // Set button backgrounds
                 if (mCustomizationOptionsBundle.getButtonBackgroundDrawable() != null) {
                     if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                         holder.mNumberButton.setBackgroundDrawable(
@@ -82,8 +146,8 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                 mCustomizationOptionsBundle.getButtonBackgroundDrawable());
                     }
                 }
-                holder.mNumberButton.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                        mCustomizationOptionsBundle.getTextSize());
+
+                // Set button sizes
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         mCustomizationOptionsBundle.getButtonSize(),
                         mCustomizationOptionsBundle.getButtonSize());
@@ -99,8 +163,13 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 if (mCustomizationOptionsBundle.getDeleteButtonDrawable() != null) {
                     holder.mButtonImage.setImageDrawable(mCustomizationOptionsBundle.getDeleteButtonDrawable());
                 }
-                holder.mButtonImage.setColorFilter(mCustomizationOptionsBundle.getTextColor(),
+                if (mCustomizationOptionsBundle.getDeleteButtonDefault()) {
+                    holder.mButtonImage.setColorFilter(mCustomizationOptionsBundle.getNumbersTextColor(),
                         PorterDuff.Mode.SRC_ATOP);
+                } else {
+                    holder.mButtonImage.setColorFilter(mCustomizationOptionsBundle.getDeleteButtonColor(),
+                        PorterDuff.Mode.SRC_ATOP);
+                }
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         mCustomizationOptionsBundle.getDeleteButtonSize(),
                         mCustomizationOptionsBundle.getDeleteButtonSize());
@@ -179,11 +248,15 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public class NumberViewHolder extends RecyclerView.ViewHolder {
-        Button mNumberButton;
+        LinearLayout mNumberButton;
+        TextView number;
+        TextView letters;
 
         public NumberViewHolder(final View itemView) {
             super(itemView);
-            mNumberButton = (Button) itemView.findViewById(R.id.button);
+            mNumberButton = (LinearLayout) itemView.findViewById(R.id.button);
+            number = (TextView) itemView.findViewById(R.id.number);
+            letters = (TextView) itemView.findViewById(R.id.letters);
             mNumberButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -235,12 +308,22 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             rect = new Rect(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
                         }
                         if (event.getAction() == MotionEvent.ACTION_UP) {
-                            mButtonImage.clearColorFilter();
+                            if (mCustomizationOptionsBundle.getDeleteButtonDefault()) {
+                                mButtonImage.clearColorFilter();
+                            } else {
+                                mButtonImage.setColorFilter(mCustomizationOptionsBundle.getDeleteButtonColor(),
+                                    PorterDuff.Mode.SRC_ATOP);
+                            }
                         }
                         if (event.getAction() == MotionEvent.ACTION_MOVE) {
                             if (!rect.contains(v.getLeft() + (int) event.getX(),
                                     v.getTop() + (int) event.getY())) {
-                                mButtonImage.clearColorFilter();
+                                if (mCustomizationOptionsBundle.getDeleteButtonDefault()) {
+                                    mButtonImage.clearColorFilter();
+                                } else {
+                                    mButtonImage.setColorFilter(mCustomizationOptionsBundle.getDeleteButtonColor(),
+                                        PorterDuff.Mode.SRC_ATOP);
+                                }
                             }
                         }
                         return false;

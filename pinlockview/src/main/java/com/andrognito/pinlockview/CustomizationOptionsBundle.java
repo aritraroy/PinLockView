@@ -10,8 +10,15 @@ import android.graphics.drawable.Drawable;
  */
 public class CustomizationOptionsBundle {
 
-    private int textColor;
-    private int textSize;
+    private int numberTextColor;
+    private int lettersTextColor;
+    private int deleteButtonColor;
+    private int numberTextSize;
+    private int lettersTextSize;
+    private boolean showLetters;
+    private boolean isNumbersTextBold;
+    private boolean isLettersTextBold;
+    private boolean isDeleteDefaultColor;
     private int buttonSize;
     private Drawable buttonBackgroundDrawable;
     private Drawable deleteButtonDrawable;
@@ -22,20 +29,76 @@ public class CustomizationOptionsBundle {
     public CustomizationOptionsBundle() {
     }
 
-    public int getTextColor() {
-        return textColor;
+    public int getNumbersTextColor() {
+        return numberTextColor;
     }
 
-    public void setTextColor(int textColor) {
-        this.textColor = textColor;
+    public void setNumbersTextColor(int textColor) {
+        this.numberTextColor = textColor;
     }
 
-    public int getTextSize() {
-        return textSize;
+    public int getLettersTextColor() {
+        return lettersTextColor;
     }
 
-    public void setTextSize(int textSize) {
-        this.textSize = textSize;
+    public void setLettersTextColor(int textColor) {
+        this.lettersTextColor = textColor;
+    }
+
+    public int getNumbersTextSize() {
+        return numberTextSize;
+    }
+
+    public void setNumbersTextSize(int textSize) {
+        this.numberTextSize = textSize;
+    }
+
+    public int getLettersTextSize() {
+        return lettersTextSize;
+    }
+
+    public void setLettersTextSize(int textSize) {
+        this.lettersTextSize = textSize;
+    }
+
+    public boolean getShowLetters() {
+        return showLetters;
+    }
+
+    public void setShowLetters(boolean showLetters) {
+        this.showLetters = showLetters;
+    }
+
+    public int getDeleteButtonColor() {
+        return deleteButtonColor;
+    }
+
+    public void setDeleteButtonColor(int defaultColor) {
+        this.deleteButtonColor = defaultColor;
+    }
+
+    public boolean getDeleteButtonDefault() {
+        return isDeleteDefaultColor;
+    }
+
+    public void setDeleteButtonDefault(boolean isDefaultColor) {
+        this.isDeleteDefaultColor = isDefaultColor;
+    }
+
+    public boolean getIsNumbersTextBold() {
+        return isNumbersTextBold;
+    }
+
+    public void setIsNumbersTextBold(boolean isNumbersTextBold) {
+        this.isNumbersTextBold = isNumbersTextBold;
+    }
+
+    public boolean getIsLettersTextBold() {
+        return isLettersTextBold;
+    }
+
+    public void setIsLettersTextBold(boolean isLettersTextBold) {
+        this.isLettersTextBold = isNumbersTextBold;
     }
 
     public int getButtonSize() {
