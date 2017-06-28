@@ -24,11 +24,13 @@ public class PinLockView extends RecyclerView {
     private String mPin = "";
     private int mPinLength;
     private int mHorizontalSpacing, mVerticalSpacing;
-    private int mTextColor, mDeleteButtonPressedColor;
-    private int mTextSize, mButtonSize, mDeleteButtonSize;
+    private int mNumbersTextColor, mLettersTextColor, mDeleteButtonPressedColor, mDeleteButtonColor;
+    private int mNumbersTextSize, mLettersTextSize, mButtonSize, mDeleteButtonSize;
     private Drawable mButtonBackgroundDrawable;
     private Drawable mDeleteButtonDrawable;
-    private boolean mShowDeleteButton;
+    private boolean mShowDeleteButton, mShowLetters;
+    private boolean mNumbersTextBold, mLettersTextBold;
+    private boolean mDeleteButtonDefault;
 
     private IndicatorDots mIndicatorDots;
     private PinLockAdapter mAdapter;
@@ -144,27 +146,41 @@ public class PinLockView extends RecyclerView {
             mPinLength = typedArray.getInt(R.styleable.PinLockView_pinLength, DEFAULT_PIN_LENGTH);
             mHorizontalSpacing = (int) typedArray.getDimension(R.styleable.PinLockView_keypadHorizontalSpacing, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_horizontal_spacing));
             mVerticalSpacing = (int) typedArray.getDimension(R.styleable.PinLockView_keypadVerticalSpacing, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_vertical_spacing));
-            mTextColor = typedArray.getColor(R.styleable.PinLockView_keypadTextColor, ResourceUtils.getColor(getContext(), R.color.white));
-            mTextSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadTextSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_text_size));
+            mNumbersTextColor = typedArray.getColor(R.styleable.PinLockView_keypadNumbersTextColor, ResourceUtils.getColor(getContext(), R.color.white));
+            mLettersTextColor = typedArray.getColor(R.styleable.PinLockView_keypadLettersTextColor, ResourceUtils.getColor(getContext(), R.color.white));
+            mDeleteButtonColor = typedArray.getColor(R.styleable.PinLockView_keypadDeleteButtonColor, ResourceUtils.getColor(getContext(), R.color.white));
+            mNumbersTextSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadNumbersTextSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_text_size));
+            mLettersTextSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadLettersTextSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_text_size));
             mButtonSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadButtonSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_button_size));
             mDeleteButtonSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadDeleteButtonSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_delete_button_size));
             mButtonBackgroundDrawable = typedArray.getDrawable(R.styleable.PinLockView_keypadButtonBackgroundDrawable);
             mDeleteButtonDrawable = typedArray.getDrawable(R.styleable.PinLockView_keypadDeleteButtonDrawable);
             mShowDeleteButton = typedArray.getBoolean(R.styleable.PinLockView_keypadShowDeleteButton, true);
+            mNumbersTextBold = typedArray.getBoolean(R.styleable.PinLockView_keypadNumbersBold, false);
+            mLettersTextBold = typedArray.getBoolean(R.styleable.PinLockView_keypadLettersBold, false);
+            mDeleteButtonDefault = typedArray.getBoolean(R.styleable.PinLockView_keypadDefaultDeleteColor, true);
+            mShowLetters = typedArray.getBoolean(R.styleable.PinLockView_keypadShowLetters, false);
             mDeleteButtonPressedColor = typedArray.getColor(R.styleable.PinLockView_keypadDeleteButtonPressedColor, ResourceUtils.getColor(getContext(), R.color.greyish));
         } finally {
             typedArray.recycle();
         }
 
         mCustomizationOptionsBundle = new CustomizationOptionsBundle();
-        mCustomizationOptionsBundle.setTextColor(mTextColor);
-        mCustomizationOptionsBundle.setTextSize(mTextSize);
+        mCustomizationOptionsBundle.setNumbersTextColor(mNumbersTextColor);
+        mCustomizationOptionsBundle.setNumbersTextSize(mNumbersTextSize);
+        mCustomizationOptionsBundle.setLettersTextColor(mLettersTextColor);
+        mCustomizationOptionsBundle.setLettersTextSize(mLettersTextSize);
         mCustomizationOptionsBundle.setButtonSize(mButtonSize);
+        mCustomizationOptionsBundle.setShowLetters(mShowLetters);
+        mCustomizationOptionsBundle.setDeleteButtonColor(mDeleteButtonColor);
+        mCustomizationOptionsBundle.setIsNumbersTextBold(mNumbersTextBold);
+        mCustomizationOptionsBundle.setIsLettersTextBold(mLettersTextBold);
         mCustomizationOptionsBundle.setButtonBackgroundDrawable(mButtonBackgroundDrawable);
         mCustomizationOptionsBundle.setDeleteButtonDrawable(mDeleteButtonDrawable);
         mCustomizationOptionsBundle.setDeleteButtonSize(mDeleteButtonSize);
         mCustomizationOptionsBundle.setShowDeleteButton(mShowDeleteButton);
         mCustomizationOptionsBundle.setDeleteButtonPressesColor(mDeleteButtonPressedColor);
+        mCustomizationOptionsBundle.setDeleteButtonDefault(mDeleteButtonDefault);
 
         initView();
     }
@@ -216,40 +232,181 @@ public class PinLockView extends RecyclerView {
     /**
      * Get the text color in the buttons
      *
-     * @return the text color
+     * @return the text color of the numbers
      */
-    public int getTextColor() {
-        return mTextColor;
+    public int getNumbersTextColor() {
+        return mNumbersTextColor;
     }
 
     /**
      * Set the text color of the buttons dynamically
      *
-     * @param textColor the text color
+     * @param textColor the text color for the numbers
      */
-    public void setTextColor(int textColor) {
-        this.mTextColor = textColor;
-        mCustomizationOptionsBundle.setTextColor(textColor);
+    public void setNumbersTextColor(int textColor) {
+        this.mNumbersTextColor = textColor;
+        mCustomizationOptionsBundle.setNumbersTextColor(textColor);
         mAdapter.notifyDataSetChanged();
     }
 
     /**
-     * Get the size of the text in the buttons
+     * Get the text color in the buttons
      *
-     * @return the size of the text in pixels
+     * @return the text color of the letters
      */
-    public int getTextSize() {
-        return mTextSize;
+    public int getLettersTextColor() {
+        return mLettersTextColor;
     }
 
     /**
-     * Set the size of text in pixels
+     * Set the text color of the buttons dynamically
+     *
+     * @param textColor the text color for the letters
+     */
+    public void setLettersTextColor(int textColor) {
+        this.mLettersTextColor = textColor;
+        mCustomizationOptionsBundle.setLettersTextColor(textColor);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Get the size of the numerical text in the buttons
+     *
+     * @return the size of the text in pixels
+     */
+    public int getNumbersTextSize() {
+        return mNumbersTextSize;
+    }
+
+    /**
+     * Set the size of numerical text in pixels
      *
      * @param textSize the text size in pixels
      */
-    public void setTextSize(int textSize) {
-        this.mTextSize = textSize;
-        mCustomizationOptionsBundle.setTextSize(textSize);
+    public void setNumbersTextSize(int textSize) {
+        this.mNumbersTextSize = textSize;
+        mCustomizationOptionsBundle.setNumbersTextSize(textSize);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Get the size of the alphabetical text in the buttons
+     *
+     * @return the size of the text in pixels
+     */
+    public int getLettersTextSize() {
+        return mLettersTextSize;
+    }
+
+    /**
+     * Set the size of the alphabetical text in pixels
+     *
+     * @param textSize the text size in pixels
+     */
+    public void setLettersTextSize(int textSize) {
+        this.mLettersTextSize = textSize;
+        mCustomizationOptionsBundle.setLettersTextSize(textSize);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Get the color of the delete button
+     *
+     * @return the delete button color
+     */
+    public int getDeleteButtonColor() {
+        return mDeleteButtonColor;
+    }
+
+    /**
+     * Set the color fo the delete button
+     *
+     * @param buttonColor the color of the delete button
+     */
+    public void setDeleteButtonColor(int buttonColor) {
+        this.mDeleteButtonColor = buttonColor;
+        mCustomizationOptionsBundle.setDeleteButtonColor(buttonColor);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Checks if the numbers text is bold
+     *
+     * @return returns true if numbers are bolded, false otherwise
+     */
+    public boolean isNumbersTextBold() {
+        return mNumbersTextBold;
+    }
+
+    /**
+     * Dynamically set the boldness of numbers text
+     *
+     * @param isNumbersBold true if the numbers text should be bold, false otherwise
+     */
+    public void setNumbersTextBold(boolean isNumbersBold) {
+        this.mNumbersTextBold = isNumbersBold;
+        mCustomizationOptionsBundle.setIsNumbersTextBold(isNumbersBold);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Checks if the letters text is bold
+     *
+     * @return returns true if letters are bolded, false otherwise
+     */
+    public boolean isLettersTextBold() {
+        return mLettersTextBold;
+    }
+
+    /**
+     * Dynamically set the boldness of letters text
+     *
+     * @param isLettersBold true if the letters text should be bold, false otherwise
+     */
+    public void setLettersTextBold(boolean isLettersBold) {
+        this.mLettersTextBold = isLettersBold;
+        mCustomizationOptionsBundle.setIsLettersTextBold(isLettersBold);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Are the letters in the keypad buttons shown
+     *
+     * @return returns true if shown, false otherwise
+     */
+    public boolean isShownLetters() {
+        return mShowLetters;
+    }
+
+    /**
+     * Dynamically set if the letters in buttons should be shown
+     *
+     * @param showLetters true if the letters in buttons should be shown, false otherwise
+     */
+    public void setShownLetters(boolean showLetters) {
+        this.mShowLetters = showLetters;
+        mCustomizationOptionsBundle.setShowLetters(showLetters);
+        mAdapter.notifyDataSetChanged();
+    }
+
+
+    /**
+     * Is the delete button of default color (white)
+     *
+     * @return returns true if it is default color, false otherwise
+     */
+    public boolean isDefaultDeleteColor() {
+        return mDeleteButtonDefault;
+    }
+
+    /**
+     * Dynamically set if the delete button is of default color
+     *
+     * @param showLetters true if the letters in buttons should be shown, false otherwise
+     */
+    public void setDefaultDeleteColor(boolean isDefaultColor) {
+        this.mDeleteButtonDefault = isDefaultColor;
+        mCustomizationOptionsBundle.setDeleteButtonDefault(isDefaultColor);
         mAdapter.notifyDataSetChanged();
     }
 
