@@ -4,6 +4,11 @@
         <attr name="pinLength" format="integer" />
         <attr name="keypadTextColor" format="color" />
         <attr name="keypadTextSize" format="dimension" />
+        <attr name="keypadNumbersTextColor" format="color" />
+        <attr name="keypadLettersTextColor" format="color" />
+        <attr name="keypadDeleteButtonColor" format="color" />
+        <attr name="keypadNumbersTextSize" format="dimension" />
+        <attr name="keypadLettersTextSize" format="dimension" />
         <attr name="keypadButtonSize" format="dimension" />
         <attr name="keypadVerticalSpacing" format="dimension" />
         <attr name="keypadHorizontalSpacing" format="dimension" />
@@ -11,6 +16,11 @@
         <attr name="keypadDeleteButtonDrawable" format="integer" />
         <attr name="keypadDeleteButtonSize" format="dimension" />
         <attr name="keypadShowDeleteButton" format="boolean" />
+        <attr name="keypadUseDeprecatedColorOptions" format="boolean" />
+        <attr name="keypadShowLetters" format="boolean" />
+        <attr name="keypadNumbersBold" format="boolean" />
+        <attr name="keypadLettersBold" format="boolean" />
+        <attr name="keypadDefaultDeleteColor" format="boolean" />
         <attr name="keypadDeleteButtonPressedColor" format="color" />
 
         <attr name="dotEmptyBackground" format="reference" />
