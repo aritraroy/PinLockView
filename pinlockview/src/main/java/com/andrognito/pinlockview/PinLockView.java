@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
@@ -170,7 +169,7 @@ public class PinLockView extends RecyclerView {
     }
 
     private void initView() {
-        setLayoutManager(new GridLayoutManager(getContext(), 3));
+        setLayoutManager(new LTRGridLayoutManager(getContext(), 3));
 
         mAdapter = new PinLockAdapter(getContext());
         mAdapter.setOnItemClickListener(mOnNumberClickListener);
