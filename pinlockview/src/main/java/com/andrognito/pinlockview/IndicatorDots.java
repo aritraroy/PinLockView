@@ -4,6 +4,7 @@ import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.IntDef;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ public class IndicatorDots extends LinearLayout {
     }
 
     private void initView(Context context) {
+        ViewCompat.setLayoutDirection(this, ViewCompat.LAYOUT_DIRECTION_LTR);
         if (mIndicatorType == 0) {
             for (int i = 0; i < mPinLength; i++) {
                 View dot = new View(context);
