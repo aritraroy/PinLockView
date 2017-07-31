@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/aritraroy/PinLockView'
     gitUrl = 'https://github.com/aritraroy/PinLockView.git'
 
-    libraryVersion = '2.0.1'
+    libraryVersion = '2.1.0'
 
     developerId = 'aritraroy'
     developerName = 'Aritra Roy'
@@ -32,8 +32,8 @@ android {
     defaultConfig {
         minSdkVersion 11
         targetSdkVersion 25
-        versionCode 4
-        versionName "2.0.1"
+        versionCode 5
+        versionName "2.1.0"
     }
     buildTypes {
         release {
