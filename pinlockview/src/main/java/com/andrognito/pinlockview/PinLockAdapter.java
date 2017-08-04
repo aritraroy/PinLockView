@@ -173,7 +173,7 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void configureDeleteButtonHolder(DeleteViewHolder holder) {
         if (holder != null) {
             if (mCustomizationOptionsBundle.isShowDeleteButton() && mPinLength > 0) {
-                holder.mButtonImage.setVisibility(View.VISIBLE);
+                holder.mDeleteButton.setVisibility(View.VISIBLE);
                 if (mCustomizationOptionsBundle.getDeleteButtonDrawable() != null) {
                     holder.mButtonImage.setImageDrawable(mCustomizationOptionsBundle.getDeleteButtonDrawable());
                 }
@@ -185,11 +185,11 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         PorterDuff.Mode.SRC_ATOP);
                 }
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        mCustomizationOptionsBundle.getDeleteButtonSize(),
-                        mCustomizationOptionsBundle.getDeleteButtonSize());
-                holder.mButtonImage.setLayoutParams(params);
+                        mCustomizationOptionsBundle.getButtonSize(),
+                        mCustomizationOptionsBundle.getButtonSize());
+                holder.mDeleteButton.setLayoutParams(params);
             } else {
-                holder.mButtonImage.setVisibility(View.GONE);
+                holder.mDeleteButton.setVisibility(View.GONE);
             }
         }
     }
@@ -292,7 +292,7 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             mButtonImage = (ImageView) itemView.findViewById(R.id.buttonImage);
 
             if (mCustomizationOptionsBundle.isShowDeleteButton() && mPinLength > 0) {
-                mButtonImage.setOnClickListener(new View.OnClickListener() {
+                mDeleteButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (mOnDeleteClickListener != null) {
@@ -301,7 +301,7 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 });
 
-                mButtonImage.setOnLongClickListener(new View.OnLongClickListener() {
+                mDeleteButton.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
                         if (mOnDeleteClickListener != null) {
@@ -311,7 +311,7 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 });
 
-                mButtonImage.setOnTouchListener(new View.OnTouchListener() {
+                mDeleteButton.setOnTouchListener(new View.OnTouchListener() {
                     private Rect rect;
 
                     @Override
