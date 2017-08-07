@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.view.View;
+import android.view.View.*;
 
 import com.andrognito.pinlockview.IndicatorDots;
 import com.andrognito.pinlockview.PinLockListener;
@@ -17,6 +20,8 @@ public class SampleActivity extends AppCompatActivity {
 
     private PinLockView mPinLockView;
     private IndicatorDots mIndicatorDots;
+    private ImageView logo;
+    private boolean isShowing = true;
 
     private PinLockListener mPinLockListener = new PinLockListener() {
         @Override
@@ -42,7 +47,7 @@ public class SampleActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sample);
-
+        logo = (ImageView) findViewById(R.id.profile_image);
         mPinLockView = (PinLockView) findViewById(R.id.pin_lock_view);
         mIndicatorDots = (IndicatorDots) findViewById(R.id.indicator_dots);
 
@@ -54,5 +59,20 @@ public class SampleActivity extends AppCompatActivity {
         mPinLockView.setPinLength(4);
 
         mIndicatorDots.setIndicatorType(IndicatorDots.IndicatorType.FILL_WITH_ANIMATION);
+
+        logo.setOnClickListener(new OnClickListener() {
+            public void onClick(View v)
+            {
+                if(isShowing) {
+                    mPinLockView.setVisibility(View.GONE);
+                    mIndicatorDots.setVisibility(View.GONE);
+                    isShowing = false;
+                } else {
+                    mPinLockView.setVisibility(View.VISIBLE);
+                    mIndicatorDots.setVisibility(View.VISIBLE);
+                    isShowing = true;
+                }
+            }
+        });
     }
 }
