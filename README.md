@@ -129,7 +129,7 @@ There are several theming options available through XML attributes which you can
   app:keypadDeleteButtonPressedColor="#C8C8C8"            // Change the pressed/focused state color of the delete button
   
   // New properties for <com.andrognito.pinlockview.PinLockView></>, added for Okta
-  // Purpose is to add letters under numbers, along with some other small customizations.
+  // Purpose is to add letters under numbers, along with some other small configurations
   
   app:keypadUseDeprecatedColorOptions                     // Set to true if you’d like to use keypadTextColor and keypadTextSize, otherwise it will use the new settings
   app:keypadNumbersTextColor="#C8C8C8"                    // Sets the color of the numbers
