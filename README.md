@@ -113,9 +113,11 @@ You **MUST** attach it to the PinLockView, otherwise it will be simply ignored.
 There are several theming options available through XML attributes which you can use to completely change the look-and-feel of this view to match the theme of your app.
 
 ```xml
+
+  // In <com.andrognito.pinlockview.PinLockView></>
   app:pinLength="6"                                       // Change the pin length
-  app:keypadTextColor="#E6E6E6"                           // Change the color of the keypad text
-  app:keypadTextSize="16dp"                               // Change the text size in the keypad
+  app:keypadTextColor="#E6E6E6"                           // Change the color of the keypad text and numbers
+  app:keypadTextSize="16dp"                               // Change the text and numbers size in the keypad
   app:keypadButtonSize="72dp"                             // Change the size of individual keys/buttons
   app:keypadVerticalSpacing="24dp"                        // Alters the vertical spacing between the keypad buttons
   app:keypadHorizontalSpacing="36dp"                      // Alters the horizontal spacing between the keypad buttons
@@ -125,6 +127,21 @@ There are several theming options available through XML attributes which you can
   app:keypadShowDeleteButton="false"                      // Should show the delete button, default is true
   app:keypadDeleteButtonPressedColor="#C8C8C8"            // Change the pressed/focused state color of the delete button
   
+  // New properties for <com.andrognito.pinlockview.PinLockView></>, added for Okta
+  // 
+  app:keypadUseDeprecatedColorOptions                     // Set to true if you’d like to use keypadTextColor and keypadTextSize, otherwise it will use the new settings
+  app:keypadNumbersTextColor="#C8C8C8"                    // Sets the color of the numbers
+  app:keypadNumbersTextSize                               // Sets the font size of the numbers
+  app:keypadLettersTextColor="#C8C8C8"                    // Sets the color of the letters
+  app:keypadLettersTextSize                               // Sets the font size of the letters
+  app:keypadDeleteButtonColor="#C8C8C8"                   // Sets the color of the delete button
+  app:keypadShowLetters="true"                            // Changes visibility of the letters
+  app:keypadNumbersBold="true"                            // Sets the boldness of number text
+  app:keypadLettersBold="false"                           // Sets the boldness of letter text
+  app:keypadDefaultDeleteColor="false"                    // Set to false if you want a differently coloured delete button
+  
+  
+  // In <com.andrognito.pinlockview.IndicatorDots></>
   app:dotEmptyBackground="@drawable/empty"                // Customize the empty state of the dots
   app:dotFilledBackground"@drawable/filled"               // Customize the filled state of the dots
   app:dotDiameter="12dp"                                  // Change the diameter of the dots
