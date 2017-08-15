@@ -115,6 +115,7 @@ There are several theming options available through XML attributes which you can
 ```xml
 
   // In <com.andrognito.pinlockview.PinLockView></>
+  
   app:pinLength="6"                                       // Change the pin length
   app:keypadTextColor="#E6E6E6"                           // Change the color of the keypad text and numbers
   app:keypadTextSize="16dp"                               // Change the text and numbers size in the keypad
@@ -128,7 +129,8 @@ There are several theming options available through XML attributes which you can
   app:keypadDeleteButtonPressedColor="#C8C8C8"            // Change the pressed/focused state color of the delete button
   
   // New properties for <com.andrognito.pinlockview.PinLockView></>, added for Okta
-  // 
+  // Purpose is to add letters under numbers, along with some other small customizations.
+  
   app:keypadUseDeprecatedColorOptions                     // Set to true if you’d like to use keypadTextColor and keypadTextSize, otherwise it will use the new settings
   app:keypadNumbersTextColor="#C8C8C8"                    // Sets the color of the numbers
   app:keypadNumbersTextSize                               // Sets the font size of the numbers
@@ -142,6 +144,7 @@ There are several theming options available through XML attributes which you can
   
   
   // In <com.andrognito.pinlockview.IndicatorDots></>
+  
   app:dotEmptyBackground="@drawable/empty"                // Customize the empty state of the dots
   app:dotFilledBackground"@drawable/filled"               // Customize the filled state of the dots
   app:dotDiameter="12dp"                                  // Change the diameter of the dots
