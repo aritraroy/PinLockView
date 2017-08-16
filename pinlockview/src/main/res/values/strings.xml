@@ -1,13 +1,14 @@
 <resources>
     <string name="app_name">PinLockView</string>
     <string name="button_one_text"></string>
-    <string name="button_two_text">A B C</string>
-    <string name="button_three_text">D E F</string>
-    <string name="button_four_text">G H I</string>
-    <string name="button_five_text">J K L</string>
-    <string name="button_six_text">M N O</string>
-    <string name="button_seven_text">P Q R S</string>
-    <string name="button_eight_text">T U V</string>
-    <string name="button_nine_text">W X Y Z</string>
+    <string name="button_two_text">A  B  C</string>
+    <string name="button_three_text">D  E  F</string>
+    <string name="button_four_text">G  H  I</string>
+    <string name="button_five_text">J  K  L</string>
+    <string name="button_six_text">M  N  O</string>
+    <string name="button_seven_text">P  Q  R  S</string>
+    <string name="button_eight_text">T  U  V</string>
+    <string name="button_nine_text">W  X  Y  Z</string>
     <string name="button_zero_text"></string>
+
 </resources>

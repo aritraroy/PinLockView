@@ -104,6 +104,7 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 // Set up letters
                 if (mCustomizationOptionsBundle.getShowLetters()) {
                     holder.letters.setVisibility(View.VISIBLE);
+                    holder.letters.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
                     if (holder != null && position != 9) {
                         switch (mKeyValues[position]) {
                             case 1:
@@ -142,11 +143,11 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 // Set boldness of text
                 if (mCustomizationOptionsBundle.getIsNumbersTextBold()) {
-                    holder.number.setTypeface(null, Typeface.BOLD);
+                    holder.number.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
                 }
 
                 if (mCustomizationOptionsBundle.getIsLettersTextBold()) {
-                    holder.letters.setTypeface(null, Typeface.BOLD);
+                    holder.letters.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
                 }
 
                 // Set button backgrounds
@@ -172,7 +173,7 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void configureDeleteButtonHolder(DeleteViewHolder holder) {
         if (holder != null) {
             if (mCustomizationOptionsBundle.isShowDeleteButton() && mPinLength > 0) {
-                holder.mButtonImage.setVisibility(View.VISIBLE);
+                holder.mDeleteButton.setVisibility(View.VISIBLE);
                 if (mCustomizationOptionsBundle.getDeleteButtonDrawable() != null) {
                     holder.mButtonImage.setImageDrawable(mCustomizationOptionsBundle.getDeleteButtonDrawable());
                 }
@@ -184,11 +185,11 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         PorterDuff.Mode.SRC_ATOP);
                 }
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        mCustomizationOptionsBundle.getDeleteButtonSize(),
-                        mCustomizationOptionsBundle.getDeleteButtonSize());
-                holder.mButtonImage.setLayoutParams(params);
+                        mCustomizationOptionsBundle.getButtonSize(),
+                        mCustomizationOptionsBundle.getButtonSize());
+                holder.mDeleteButton.setLayoutParams(params);
             } else {
-                holder.mButtonImage.setVisibility(View.GONE);
+                holder.mDeleteButton.setVisibility(View.GONE);
             }
         }
     }
