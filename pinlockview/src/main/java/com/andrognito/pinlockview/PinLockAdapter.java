@@ -143,11 +143,11 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 // Set boldness of text
                 if (mCustomizationOptionsBundle.getIsNumbersTextBold()) {
-                    holder.number.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+                    holder.number.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
                 }
 
                 if (mCustomizationOptionsBundle.getIsLettersTextBold()) {
-                    holder.letters.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+                    holder.letters.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
                 }
 
                 // Set button backgrounds
