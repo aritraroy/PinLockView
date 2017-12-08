@@ -243,6 +243,7 @@ public class PinLockView extends RecyclerView {
      */
     public void setPinLength(int pinLength) {
         this.mPinLength = pinLength;
+        mCustomizationOptionsBundle.setPinLength(mPinLength);
 
         if (isIndicatorDotsAttached()) {
             mIndicatorDots.setPinLength(pinLength);
