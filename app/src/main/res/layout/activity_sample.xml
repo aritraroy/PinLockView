@@ -47,6 +47,8 @@
         app:keypadButtonSize="72dp"
         app:keypadShowDeleteButton="true"
         app:keypadTextColor="@color/white"
-        app:keypadTextSize="18dp" />
+        app:keypadTextSize="18dp"
+        app:keypadShowEnterButton="true"
+        app:keypadSwapEnterDeleteButtons="true"/>
 
 </RelativeLayout>
