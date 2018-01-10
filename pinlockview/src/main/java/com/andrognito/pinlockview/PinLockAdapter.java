@@ -121,6 +121,10 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             } else {
                 holder.mButtonImage.setVisibility(View.GONE);
             }
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    mCustomizationOptionsBundle.getButtonSize(),
+                    mCustomizationOptionsBundle.getButtonSize());
+            holder.mDeleteButton.setLayoutParams(params);
         }
     }
 
@@ -142,14 +146,14 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                     holder.mEnterButton.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                             mCustomizationOptionsBundle.getTextSize());
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            mCustomizationOptionsBundle.getButtonSize(),
-                            mCustomizationOptionsBundle.getButtonSize());
-                    holder.mEnterButton.setLayoutParams(params);
                 }
             } else {
                 holder.mEnterButton.setVisibility(View.GONE);
             }
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    mCustomizationOptionsBundle.getButtonSize(),
+                    mCustomizationOptionsBundle.getButtonSize());
+            holder.mEnterButton.setLayoutParams(params);
         }
     }
 
