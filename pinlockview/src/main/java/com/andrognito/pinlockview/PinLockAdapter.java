@@ -235,7 +235,8 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             rect = new Rect(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
                         }
                         if (event.getAction() == MotionEvent.ACTION_UP) {
-                            mButtonImage.clearColorFilter();
+                            mButtonImage.setColorFilter(mCustomizationOptionsBundle.getTextColor(),
+                                    PorterDuff.Mode.SRC_ATOP);
                         }
                         if (event.getAction() == MotionEvent.ACTION_MOVE) {
                             if (!rect.contains(v.getLeft() + (int) event.getX(),
