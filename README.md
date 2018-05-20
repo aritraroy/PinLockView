@@ -21,7 +21,7 @@ This library is available in **jCenter** which is the default Maven repository u
 dependencies {
     // other dependencies here
     
-    compile 'com.andrognito.pinlockview:pinlockview:2.1.0'
+    implementation 'com.andrognito.pinlockview:pinlockview:2.1.0'
 }
 ```
 
