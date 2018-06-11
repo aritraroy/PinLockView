@@ -21,11 +21,18 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private static final int VIEW_TYPE_NUMBER = 0;
     private static final int VIEW_TYPE_DELETE = 1;
+    private static final int VIEW_TYPE_ENTER = 2;
 
     private Context mContext;
     private CustomizationOptionsBundle mCustomizationOptionsBundle;
     private OnNumberClickListener mOnNumberClickListener;
     private OnDeleteClickListener mOnDeleteClickListener;
+
+    private OnEnterClickListener mOnEnterClickListener;
+
+    private int enterButtonPosition = 9;
+    private int deleteButtonPosition = 11;
+
     private int mPinLength;
 
     private int[] mKeyValues;
@@ -43,9 +50,12 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (viewType == VIEW_TYPE_NUMBER) {
             View view = inflater.inflate(R.layout.layout_number_item, parent, false);
             viewHolder = new NumberViewHolder(view);
-        } else {
+        } else if (viewType == VIEW_TYPE_DELETE) {
             View view = inflater.inflate(R.layout.layout_delete_item, parent, false);
             viewHolder = new DeleteViewHolder(view);
+        } else {
+            View view = inflater.inflate(R.layout.layout_enter_item, parent, false);
+            viewHolder = new EnterViewHolder(view);
         }
         return viewHolder;
     }
@@ -58,6 +68,9 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         } else if (holder.getItemViewType() == VIEW_TYPE_DELETE) {
             DeleteViewHolder vh2 = (DeleteViewHolder) holder;
             configureDeleteButtonHolder(vh2);
+        } else if (holder.getItemViewType() == VIEW_TYPE_ENTER) {
+            EnterViewHolder vh3 = (EnterViewHolder) holder;
+            configureEnterButtonHolder(vh3);
         }
     }
 
@@ -108,6 +121,39 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             } else {
                 holder.mButtonImage.setVisibility(View.GONE);
             }
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    mCustomizationOptionsBundle.getButtonSize(),
+                    mCustomizationOptionsBundle.getButtonSize());
+            holder.mDeleteButton.setLayoutParams(params);
+        }
+    }
+
+    private void configureEnterButtonHolder(EnterViewHolder holder) {
+        if (holder != null) {
+            if (mCustomizationOptionsBundle.isShowEnterButton() && mPinLength >= mCustomizationOptionsBundle.getPinLength()) {
+                holder.mEnterButton.setVisibility(View.VISIBLE);
+
+                if (mCustomizationOptionsBundle != null) {
+                    holder.mEnterButton.setTextColor(mCustomizationOptionsBundle.getTextColor());
+                    if (mCustomizationOptionsBundle.getButtonBackgroundDrawable() != null) {
+                        if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                            holder.mEnterButton.setBackgroundDrawable(
+                                    mCustomizationOptionsBundle.getButtonBackgroundDrawable());
+                        } else {
+                            holder.mEnterButton.setBackground(
+                                    mCustomizationOptionsBundle.getButtonBackgroundDrawable());
+                        }
+                    }
+                    holder.mEnterButton.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                            mCustomizationOptionsBundle.getTextSize());
+                }
+            } else {
+                holder.mEnterButton.setVisibility(View.GONE);
+            }
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    mCustomizationOptionsBundle.getButtonSize(),
+                    mCustomizationOptionsBundle.getButtonSize());
+            holder.mEnterButton.setLayoutParams(params);
         }
     }
 
@@ -118,7 +164,10 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        if (position == getItemCount() - 1) {
+        if (position == getEnterButtonPosition()) {
+            return VIEW_TYPE_ENTER;
+        }
+        if (position == getDeleteButtonPosition()) {
             return VIEW_TYPE_DELETE;
         }
         return VIEW_TYPE_NUMBER;
@@ -170,12 +219,34 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mOnDeleteClickListener = onDeleteClickListener;
     }
 
+    public void setOnEnterClickListener(OnEnterClickListener onEnterClickListener) {
+        this.mOnEnterClickListener = onEnterClickListener;
+    }
+
     public CustomizationOptionsBundle getCustomizationOptions() {
         return mCustomizationOptionsBundle;
     }
 
     public void setCustomizationOptions(CustomizationOptionsBundle customizationOptionsBundle) {
         this.mCustomizationOptionsBundle = customizationOptionsBundle;
+        setEnterButtonPosition(mCustomizationOptionsBundle.isSwapEnterDeleteButtons() ? 11 : 9);
+        setDeleteButtonPosition(mCustomizationOptionsBundle.isSwapEnterDeleteButtons() ? 9 : 11);
+    }
+
+    public int getEnterButtonPosition() {
+        return enterButtonPosition;
+    }
+
+    public void setEnterButtonPosition(int enterButtonPosition) {
+        this.enterButtonPosition = enterButtonPosition;
+    }
+
+    public int getDeleteButtonPosition() {
+        return deleteButtonPosition;
+    }
+
+    public void setDeleteButtonPosition(int deleteButtonPosition) {
+        this.deleteButtonPosition = deleteButtonPosition;
     }
 
     public class NumberViewHolder extends RecyclerView.ViewHolder {
@@ -250,6 +321,23 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    public class EnterViewHolder extends RecyclerView.ViewHolder {
+        Button mEnterButton;
+
+        public EnterViewHolder(final View itemView) {
+            super(itemView);
+            mEnterButton = (Button) itemView.findViewById(R.id.button);
+            mEnterButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnEnterClickListener != null) {
+                        mOnEnterClickListener.onEnterClicked();
+                    }
+                }
+            });
+        }
+    }
+
     public interface OnNumberClickListener {
         void onNumberClicked(int keyValue);
     }
@@ -258,5 +346,9 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         void onDeleteClicked();
 
         void onDeleteLongClicked();
+    }
+
+    public interface OnEnterClickListener {
+        void onEnterClicked();
     }
 }

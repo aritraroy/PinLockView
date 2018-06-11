@@ -29,6 +29,9 @@ public class PinLockView extends RecyclerView {
     private Drawable mDeleteButtonDrawable;
     private boolean mShowDeleteButton;
 
+    private boolean mShowEnterButton;
+    private boolean mSwapEnterDeleteButtons;
+
     private IndicatorDots mIndicatorDots;
     private PinLockAdapter mAdapter;
     private PinLockListener mPinLockListener;
@@ -39,7 +42,7 @@ public class PinLockView extends RecyclerView {
             = new PinLockAdapter.OnNumberClickListener() {
         @Override
         public void onNumberClicked(int keyValue) {
-            if (mPin.length() < getPinLength()) {
+            if (mPin.length() < getPinLength() || mShowEnterButton) {
                 mPin = mPin.concat(String.valueOf(keyValue));
 
                 if (isIndicatorDotsAttached()) {
@@ -48,11 +51,16 @@ public class PinLockView extends RecyclerView {
 
                 if (mPin.length() == 1) {
                     mAdapter.setPinLength(mPin.length());
-                    mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
+                    mAdapter.notifyItemChanged(mAdapter.getDeleteButtonPosition());
+                }
+
+                if (mPin.length() == mPinLength) {
+                    mAdapter.setPinLength(mPin.length());
+                    mAdapter.notifyItemChanged(mAdapter.getEnterButtonPosition());
                 }
 
                 if (mPinLockListener != null) {
-                    if (mPin.length() == mPinLength) {
+                    if (mPin.length() == mPinLength && !mShowEnterButton) {
                         mPinLockListener.onComplete(mPin);
                     } else {
                         mPinLockListener.onPinChange(mPin.length(), mPin);
@@ -73,7 +81,9 @@ public class PinLockView extends RecyclerView {
 
                 } else {
                     if (mPinLockListener != null) {
-                        mPinLockListener.onComplete(mPin);
+                        if (!mShowEnterButton) {
+                            mPinLockListener.onComplete(mPin);
+                        }
                     }
                 }
             }
@@ -93,7 +103,12 @@ public class PinLockView extends RecyclerView {
 
                 if (mPin.length() == 0) {
                     mAdapter.setPinLength(mPin.length());
-                    mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
+                    mAdapter.notifyItemChanged(mAdapter.getDeleteButtonPosition());
+                }
+
+                if (mPin.length() == mPinLength - 1) {
+                    mAdapter.setPinLength(mPin.length());
+                    mAdapter.notifyItemChanged(mAdapter.getEnterButtonPosition());
                 }
 
                 if (mPinLockListener != null) {
@@ -116,6 +131,16 @@ public class PinLockView extends RecyclerView {
             resetPinLockView();
             if (mPinLockListener != null) {
                 mPinLockListener.onEmpty();
+            }
+        }
+    };
+
+    private PinLockAdapter.OnEnterClickListener mOnEnterClickListener
+            = new PinLockAdapter.OnEnterClickListener() {
+        @Override
+        public void onEnterClicked() {
+            if (mPin.length() >= mPinLength) {
+                mPinLockListener.onComplete(mPin);
             }
         }
     };
@@ -151,6 +176,12 @@ public class PinLockView extends RecyclerView {
             mDeleteButtonDrawable = typedArray.getDrawable(R.styleable.PinLockView_keypadDeleteButtonDrawable);
             mShowDeleteButton = typedArray.getBoolean(R.styleable.PinLockView_keypadShowDeleteButton, true);
             mDeleteButtonPressedColor = typedArray.getColor(R.styleable.PinLockView_keypadDeleteButtonPressedColor, ResourceUtils.getColor(getContext(), R.color.greyish));
+
+            mShowEnterButton = typedArray.getBoolean(R.styleable.PinLockView_keypadShowEnterButton, false);
+            if (mShowEnterButton) {
+                mShowDeleteButton = true;
+            }
+            mSwapEnterDeleteButtons = typedArray.getBoolean(R.styleable.PinLockView_keypadSwapEnterDeleteButtons, false);
         } finally {
             typedArray.recycle();
         }
@@ -165,6 +196,9 @@ public class PinLockView extends RecyclerView {
         mCustomizationOptionsBundle.setShowDeleteButton(mShowDeleteButton);
         mCustomizationOptionsBundle.setDeleteButtonPressesColor(mDeleteButtonPressedColor);
 
+        mCustomizationOptionsBundle.setShowEnterButton(mShowEnterButton);
+        mCustomizationOptionsBundle.setPinLength(mPinLength);
+        mCustomizationOptionsBundle.setSwapEnterDeleteButtons(mSwapEnterDeleteButtons);
         initView();
     }
 
@@ -174,6 +208,9 @@ public class PinLockView extends RecyclerView {
         mAdapter = new PinLockAdapter(getContext());
         mAdapter.setOnItemClickListener(mOnNumberClickListener);
         mAdapter.setOnDeleteClickListener(mOnDeleteClickListener);
+
+        mAdapter.setOnEnterClickListener(mOnEnterClickListener);
+
         mAdapter.setCustomizationOptions(mCustomizationOptionsBundle);
         setAdapter(mAdapter);
 
@@ -206,6 +243,7 @@ public class PinLockView extends RecyclerView {
      */
     public void setPinLength(int pinLength) {
         this.mPinLength = pinLength;
+        mCustomizationOptionsBundle.setPinLength(mPinLength);
 
         if (isIndicatorDotsAttached()) {
             mIndicatorDots.setPinLength(pinLength);
@@ -405,7 +443,8 @@ public class PinLockView extends RecyclerView {
         clearInternalPin();
 
         mAdapter.setPinLength(mPin.length());
-        mAdapter.notifyItemChanged(mAdapter.getItemCount() - 1);
+        mAdapter.notifyItemChanged(mAdapter.getEnterButtonPosition());
+        mAdapter.notifyItemChanged(mAdapter.getDeleteButtonPosition());
 
         if (mIndicatorDots != null) {
             mIndicatorDots.updateDot(mPin.length());
