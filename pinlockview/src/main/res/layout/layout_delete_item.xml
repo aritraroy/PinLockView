@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/button"
+        android:id="@+id/delete_button"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:clickable="true"

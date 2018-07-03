@@ -2,10 +2,12 @@ package com.andrognito.pinlockview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.View;
 
 /**
  * Represents a numeric lock view which can used to taken numbers as input.
@@ -35,7 +37,17 @@ public class PinLockView extends RecyclerView {
     private boolean mShowEnterButton;
     private boolean mSwapEnterDeleteButtons;
 
+    private int mEnterButtonColor;
+    private int mEnterButtonDisabledColor;
+    private int mEnterButtonPressedColor;
+
+    private boolean mUseCustomEnterButtonImages;
+    private int mEnterButtonEnabledDrawableId;
+    private int mEnterButtonDisabledDrawableId;
+
     private IndicatorDots mIndicatorDots;
+    private InputField mInputField;
+    private SeparateDeleteButton mSeparateDeleteButton;
     private PinLockAdapter mAdapter;
     private PinLockListener mPinLockListener;
     private CustomizationOptionsBundle mCustomizationOptionsBundle;
@@ -51,10 +63,16 @@ public class PinLockView extends RecyclerView {
                 if (isIndicatorDotsAttached()) {
                     mIndicatorDots.updateDot(mPin.length());
                 }
+                if (isInputFieldAttached()) {
+                    mInputField.setText(mPin);
+                }
 
                 if (mPin.length() == 1) {
                     mAdapter.setPinLength(mPin.length());
                     mAdapter.notifyItemChanged(mAdapter.getDeleteButtonPosition());
+                    if (mSeparateDeleteButton != null && mSeparateDeleteButton.isShowSeparateDeleteButton()) {
+                        mSeparateDeleteButton.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 if (mPin.length() == mPinLength) {
@@ -69,26 +87,8 @@ public class PinLockView extends RecyclerView {
                         mPinLockListener.onPinChange(mPin.length(), mPin);
                     }
                 }
-            } else {
-                if (!isShowDeleteButton()) {
-                    resetPinLockView();
-                    mPin = mPin.concat(String.valueOf(keyValue));
-
-                    if (isIndicatorDotsAttached()) {
-                        mIndicatorDots.updateDot(mPin.length());
-                    }
-
-                    if (mPinLockListener != null) {
-                        mPinLockListener.onPinChange(mPin.length(), mPin);
-                    }
-
-                } else {
-                    if (mPinLockListener != null) {
-                        if (!mShowEnterButton) {
-                            mPinLockListener.onComplete(mPin);
-                        }
-                    }
-                }
+            } else if (mPinLockListener != null && !mShowEnterButton) {
+                mPinLockListener.onComplete(mPin);
             }
         }
     };
@@ -103,10 +103,16 @@ public class PinLockView extends RecyclerView {
                 if (isIndicatorDotsAttached()) {
                     mIndicatorDots.updateDot(mPin.length());
                 }
+                if (isInputFieldAttached()) {
+                    mInputField.setText(mPin);
+                }
 
                 if (mPin.length() == 0) {
                     mAdapter.setPinLength(mPin.length());
                     mAdapter.notifyItemChanged(mAdapter.getDeleteButtonPosition());
+                    if (mSeparateDeleteButton != null) {
+                        mSeparateDeleteButton.setVisibility(View.GONE);
+                    }
                 }
 
                 if (mPin.length() == mPinLength - 1) {
@@ -122,10 +128,8 @@ public class PinLockView extends RecyclerView {
                         mPinLockListener.onPinChange(mPin.length(), mPin);
                     }
                 }
-            } else {
-                if (mPinLockListener != null) {
-                    mPinLockListener.onEmpty();
-                }
+            } else if (mPinLockListener != null) {
+                mPinLockListener.onEmpty();
             }
         }
 
@@ -190,10 +194,11 @@ public class PinLockView extends RecyclerView {
             mTextColor = typedArray.getColor(R.styleable.PinLockView_keypadTextColor, ResourceUtils.getColor(getContext(), R.color.white));
             mTextSize = (int) typedArray.getDimension(R.styleable.PinLockView_keypadTextSize, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_text_size));
             mShowEnterButton = typedArray.getBoolean(R.styleable.PinLockView_keypadShowEnterButton, false);
-            if (mShowEnterButton) {
-                mShowDeleteButton = true;
-            }
             mSwapEnterDeleteButtons = typedArray.getBoolean(R.styleable.PinLockView_keypadSwapEnterDeleteButtons, false);
+
+            mEnterButtonColor = typedArray.getColor(R.styleable.PinLockView_keypadEnterButtonColor, ResourceUtils.getColor(getContext(), R.color.white));
+            mEnterButtonDisabledColor = typedArray.getColor(R.styleable.PinLockView_keypadEnterButtonDisabledColor, ResourceUtils.getColor(getContext(), R.color.greyish));
+            mEnterButtonPressedColor = typedArray.getColor(R.styleable.PinLockView_keypadEnterButtonPressedColor, ResourceUtils.getColor(getContext(), R.color.greyish));
         } finally {
             typedArray.recycle();
         }
@@ -221,6 +226,10 @@ public class PinLockView extends RecyclerView {
         mCustomizationOptionsBundle.setShowEnterButton(mShowEnterButton);
         mCustomizationOptionsBundle.setPinLength(mPinLength);
         mCustomizationOptionsBundle.setSwapEnterDeleteButtons(mSwapEnterDeleteButtons);
+
+        mCustomizationOptionsBundle.setEnterButtonColor(mEnterButtonColor);
+        mCustomizationOptionsBundle.setEnterButtonDisabledColor(mEnterButtonDisabledColor);
+        mCustomizationOptionsBundle.setEnterButtonPressesColor(mEnterButtonPressedColor);
         initView();
     }
 
@@ -269,6 +278,9 @@ public class PinLockView extends RecyclerView {
 
         if (isIndicatorDotsAttached()) {
             mIndicatorDots.setPinLength(pinLength);
+        }
+        if (isInputFieldAttached()) {
+            mInputField.setText(mPin);
         }
     }
 
@@ -610,6 +622,7 @@ public class PinLockView extends RecyclerView {
     public void setShowDeleteButton(boolean showDeleteButton) {
         this.mShowDeleteButton = showDeleteButton;
         mCustomizationOptionsBundle.setShowDeleteButton(showDeleteButton);
+        mAdapter.notifyItemChanged(mAdapter.getDeleteButtonPosition());
         mAdapter.notifyDataSetChanged();
     }
 
@@ -633,7 +646,43 @@ public class PinLockView extends RecyclerView {
         mAdapter.notifyDataSetChanged();
     }
 
+    public boolean isShowEnterButton() {
+        return mShowEnterButton;
+    }
 
+    /**
+     * Sets if the enter button should be shown
+     *
+     * @param showEnterButton true if the enter button should be shown
+     */
+    public void setShowEnterButton(boolean showEnterButton) {
+        this.mShowEnterButton = showEnterButton;
+        mCustomizationOptionsBundle.setShowEnterButton(showEnterButton);
+        mAdapter.notifyItemChanged(mAdapter.getEnterButtonPosition());
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Returns if enter and delete buttons are swapped
+     *
+     * @return true if enter and delete buttons are swapped
+     */
+    public boolean isSwapEnterDeleteButtons() {
+        return mSwapEnterDeleteButtons;
+    }
+
+    /**
+     * Swaps the placement of the enter and delete buttons
+     *
+     * @param swapEnterDeleteButtons true if enter and delete buttons should be swapped
+     */
+    public void setSwapEnterDeleteButtons(boolean swapEnterDeleteButtons) {
+        this.mSwapEnterDeleteButtons = swapEnterDeleteButtons;
+        mCustomizationOptionsBundle.setSwapEnterDeleteButtons(swapEnterDeleteButtons);
+        mAdapter.setEnterButtonPosition(mCustomizationOptionsBundle.isSwapEnterDeleteButtons() ? 11 : 9);
+        mAdapter.setDeleteButtonPosition(mCustomizationOptionsBundle.isSwapEnterDeleteButtons() ? 9 : 11);
+        mAdapter.notifyDataSetChanged();
+    }
 
     public int[] getCustomKeySet() {
         return mCustomKeySet;
@@ -674,6 +723,14 @@ public class PinLockView extends RecyclerView {
         if (mIndicatorDots != null) {
             mIndicatorDots.updateDot(mPin.length());
         }
+        if (mInputField != null) {
+            mInputField.setText("");
+        }
+        if (mSeparateDeleteButton != null) {
+            mSeparateDeleteButton.setVisibility(View.GONE);
+            mSeparateDeleteButton.setColorFilter(mSeparateDeleteButton.getSeparateDeleteButtonColor(),
+                    PorterDuff.Mode.SRC_ATOP);
+        }
     }
 
     /**
@@ -692,5 +749,103 @@ public class PinLockView extends RecyclerView {
      */
     public void attachIndicatorDots(IndicatorDots mIndicatorDots) {
         this.mIndicatorDots = mIndicatorDots;
+    }
+
+    public void detachIndicatorDots() {
+        this.mIndicatorDots = null;
+    }
+
+    /**
+     * Returns true if {@link SeparateDeleteButton} is attached to {@link PinLockView}
+     *
+     * @return true if attached, false otherwise
+     */
+    public boolean isSeparateDeleteButtonAttached() {
+        return mSeparateDeleteButton != null;
+    }
+
+    /**
+     * Attaches {@link SeparateDeleteButton} to {@link PinLockView}
+     *
+     * @param separateDeleteButton the SeparateDeleteButton to attach
+     */
+    public void attachSeparateDeleteButton(SeparateDeleteButton separateDeleteButton) {
+        this.mSeparateDeleteButton = separateDeleteButton;
+        this.mSeparateDeleteButton.setOnDeleteClickListener(mOnDeleteClickListener);
+        if (mPin.length() == 0) {
+            this.mSeparateDeleteButton.setVisibility(View.GONE);
+        } else {
+            this.mSeparateDeleteButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void detachSeparateDeleteButton() {
+        this.mSeparateDeleteButton = null;
+    }
+
+    /**
+     * Returns true if {@link InputField} is attached to {@link PinLockView}
+     *
+     * @return true if attached, false otherwise
+     */
+    public boolean isInputFieldAttached() {
+        return mInputField != null;
+    }
+
+    /**
+     * Attaches {@link InputField} to {@link PinLockView}
+     *
+     * @param inputField the InputField to attach
+     */
+    public void attachInputField(InputField inputField) {
+        this.mInputField = inputField;
+    }
+
+    public void detachInputField() {
+        this.mInputField = null;
+    }
+
+    /**
+     * Sets whether custom enter button images should be used.
+     *
+     * @param useCustomEnterButtonImages true if custom enter buttons should be used
+     */
+    public void setUseCustomEnterButtonImages(boolean useCustomEnterButtonImages) {
+        this.mUseCustomEnterButtonImages = useCustomEnterButtonImages;
+        mCustomizationOptionsBundle.setUseCustomEnterButtonImages(useCustomEnterButtonImages);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Sets the drawable ID of the enter button when enabled
+     *
+     * @param id the drawable ID
+     */
+    public void setEnterButtonEnabledDrawableId(int id) {
+        this.mEnterButtonEnabledDrawableId = id;
+        mCustomizationOptionsBundle.setEnterButtonEnabledDrawableId(id);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Sets the drawable ID of the enter button when disabled
+     *
+     * @param id the drawable ID
+     */
+    public void setEnterButtonDisabledDrawableId(int id) {
+        this.mEnterButtonEnabledDrawableId = id;
+        mCustomizationOptionsBundle.setEnterButtonDisabledDrawableId(id);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Sets the drawable ID of the enter button when pressed
+     *
+     * @param id the drawable ID
+     */
+    public void setEnterButtonPressedDrawableId(int id) {
+        this.mEnterButtonEnabledDrawableId = id;
+        mCustomizationOptionsBundle.setEnterButtonPressedDrawableId(id);
+        mAdapter.notifyDataSetChanged();
     }
 }

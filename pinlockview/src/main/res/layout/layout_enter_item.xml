@@ -6,11 +6,14 @@
     android:clipToPadding="false"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button"
+    <ImageButton
+        android:id="@+id/enter_button"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:padding="16dp"
+        android:src="@drawable/ic_check_circle"
         android:background="@android:color/transparent"
-        android:text="OK" />
+        android:scaleType="fitCenter"
+        />
 
 </LinearLayout>
