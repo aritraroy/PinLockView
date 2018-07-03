@@ -48,6 +48,8 @@
         app:keypadShowDeleteButton="true"
         app:keypadTextColor="@color/white"
         app:keypadUseDeprecatedColorOptions="true"
-        app:keypadDefaultDeleteColor="true"/>
+        app:keypadDefaultDeleteColor="true"
+        app:keypadShowEnterButton="true"
+        app:keypadSwapEnterDeleteButtons="true"/>
 
 </RelativeLayout>
