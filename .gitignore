@@ -1,0 +1,9 @@
+.gradle/
+.idea/
+Alex-PinLockView.iml
+app/app.iml
+app/build/
+build/
+local.properties
+pinlockview/build/
+pinlockview/pinlockview.iml
