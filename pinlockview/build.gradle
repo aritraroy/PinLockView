@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/aritraroy/PinLockView'
     gitUrl = 'https://github.com/aritraroy/PinLockView.git'
 
-    libraryVersion = '2.0.1'
+    libraryVersion = '2.1.0'
 
     developerId = 'aritraroy'
     developerName = 'Aritra Roy'
@@ -26,14 +26,14 @@ ext {
 
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
-        minSdkVersion 11
-        targetSdkVersion 25
-        versionCode 4
-        versionName "2.0.1"
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 5
+        versionName "2.1.0"
     }
     buildTypes {
         release {
@@ -46,8 +46,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support:recyclerview-v7:25.2.0'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'

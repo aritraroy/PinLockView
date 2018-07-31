@@ -5,11 +5,10 @@ import android.graphics.drawable.Drawable;
 /**
  * The customization options for the buttons in {@link PinLockView}
  * passed to the {@link PinLockAdapter} to decorate the individual views
- *
+ * <p>
  * Created by aritraroy on 01/06/16.
  */
 public class CustomizationOptionsBundle {
-
     private int numberTextColor;
     private int lettersTextColor;
     private int deleteButtonColor;
@@ -28,6 +27,19 @@ public class CustomizationOptionsBundle {
     private boolean showDeleteButton;
     private boolean useDeprecated;
     private int deleteButtonPressesColor;
+
+    private boolean showEnterButton;
+    private int pinLength;
+    private boolean swapEnterDeleteButtons;
+
+    private int enterButtonColor;
+    private int enterButtonDisabledColor;
+    private int enterButtonPressesColor;
+    private boolean useCustomEnterButtomImages;
+    private int enterButtonEnabledDrawableId;
+    private int enterButtonDisabledDrawableId;
+    private int enterButtonPressedDrawableId;
+
 
     public CustomizationOptionsBundle() {
     }
@@ -175,5 +187,85 @@ public class CustomizationOptionsBundle {
 
     public void setDeleteButtonPressesColor(int deleteButtonPressesColor) {
         this.deleteButtonPressesColor = deleteButtonPressesColor;
+    }
+
+    public boolean isShowEnterButton() {
+        return showEnterButton;
+    }
+
+    public void setShowEnterButton(boolean showEnterButton) {
+        this.showEnterButton = showEnterButton;
+    }
+
+    public int getEnterButtonColor() {
+        return this.enterButtonColor;
+    }
+
+    public void setEnterButtonColor(int enterButtonColor) {
+        this.enterButtonColor = enterButtonColor;
+    }
+
+    public int getEnterButtonDisabledColor() {
+        return this.enterButtonDisabledColor;
+    }
+
+    public void setEnterButtonDisabledColor(int enterButtonDisabledColor) {
+        this.enterButtonDisabledColor = enterButtonDisabledColor;
+    }
+
+    public int getEnterButtonPressesColor() {
+        return this.enterButtonPressesColor;
+    }
+
+    public void setEnterButtonPressesColor(int enterButtonPressesColor) {
+        this.enterButtonPressesColor = enterButtonPressesColor;
+    }
+
+    public int getPinLength() {
+        return pinLength;
+    }
+
+    public void setPinLength(int pinLength) {
+        this.pinLength = pinLength;
+    }
+
+    public boolean isSwapEnterDeleteButtons() {
+        return swapEnterDeleteButtons;
+    }
+
+    public void setSwapEnterDeleteButtons(boolean swapEnterDeleteButtons) {
+        this.swapEnterDeleteButtons = swapEnterDeleteButtons;
+    }
+
+    public boolean isUseCustomEnterButtonImages() {
+        return useCustomEnterButtomImages;
+    }
+
+    public void setUseCustomEnterButtonImages(boolean useCustomEnterButtomImages) {
+        this.useCustomEnterButtomImages = useCustomEnterButtomImages;
+    }
+
+    public int getEnterButtonEnabledDrawableId() {
+        return enterButtonEnabledDrawableId;
+    }
+
+    public void setEnterButtonEnabledDrawableId(int enterButtonEnabledDrawableId) {
+        this.enterButtonEnabledDrawableId = enterButtonEnabledDrawableId;
+    }
+
+    public int getEnterButtonDisabledDrawableId() {
+        return enterButtonDisabledDrawableId;
+    }
+
+    public void setEnterButtonDisabledDrawableId(int enterButtonDisabledDrawableId) {
+        this.enterButtonDisabledDrawableId = enterButtonDisabledDrawableId;
+    }
+
+    public int getEnterButtonPressedDrawableId() {
+        return enterButtonPressedDrawableId;
+    }
+
+    public void setEnterButtonPressedDrawableId(int enterButtonPressedDrawableId) {
+        this.enterButtonPressedDrawableId = enterButtonPressedDrawableId;
     }
 }

@@ -21,7 +21,7 @@ This library is available in **jCenter** which is the default Maven repository u
 dependencies {
     // other dependencies here
     
-    compile 'com.andrognito.pinlockview:pinlockview:2.0.1'
+    implementation 'com.andrognito.pinlockview:pinlockview:2.1.0'
 }
 ```
 
@@ -31,7 +31,7 @@ dependencies {
 <dependency>
   <groupId>com.andrognito.pinlockview</groupId>
   <artifactId>pinlockview</artifactId>
-  <version>2.0.1</version>
+  <version>2.1.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -164,7 +164,8 @@ Android & Backend Developer. Blogger. Designer. Fitness Enthusiast.
 
 <a href="https://play.google.com/store/apps/details?id=com.codexapps.andrognito&hl=en" target="_blank"><img src="https://github.com/aritraroy/social-icons/blob/master/play-store-icon.png?raw=true" width="60"></a> <a href="https://blog.aritraroy.in/" target="_blank"><img src="https://github.com/aritraroy/social-icons/blob/master/medium-icon.png?raw=true" width="60"></a>
 <a href="http://stackoverflow.com/users/2858654/aritra-roy" target="_blank"><img src="https://github.com/aritraroy/social-icons/blob/master/stackoverflow-icon.png?raw=true" width="60"></a>
-<a href="https://twitter.com/aritraroy93" target="_blank"><img src="https://github.com/aritraroy/social-icons/blob/master/twitter-icon.png?raw=true" width="60"></a>
+<a href="https://twitter.com/aritraroy" target="_blank"><img src="https://github.com/aritraroy/social-icons/blob/master/twitter-icon.png?raw=true" width="60"></a>
+<a href="http://linkedin.com/in/aritra-roy"><img src="https://github.com/aritraroy/social-icons/blob/master/linkedin-icon.png?raw=true" width="60"></a>
 
 
 # License

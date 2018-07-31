@@ -23,6 +23,12 @@
         <attr name="keypadDefaultDeleteColor" format="boolean" />
         <attr name="keypadDeleteButtonPressedColor" format="color" />
 
+        <attr name="keypadShowEnterButton" format="boolean" />
+        <attr name="keypadSwapEnterDeleteButtons" format="boolean" />
+        <attr name="keypadEnterButtonColor" format="color" />
+        <attr name="keypadEnterButtonDisabledColor" format="color" />
+        <attr name="keypadEnterButtonPressedColor" format="color" />
+
         <attr name="dotEmptyBackground" format="reference" />
         <attr name="dotFilledBackground" format="reference" />
         <attr name="dotDiameter" format="dimension" />
@@ -32,6 +38,9 @@
             <enum name="fill" value="1" />
             <enum name="fillWithAnimation" value="2" />
         </attr>
+
+        <attr name="separateDeleteButtonColor" format="color" />
+        <attr name="separateDeleteButtonPressedColor" format="color" />
 
     </declare-styleable>
 
