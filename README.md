@@ -126,7 +126,7 @@ There are several theming options available through XML attributes which you can
   app:keypadDeleteButtonPressedColor="#C8C8C8"            // Change the pressed/focused state color of the delete button
   
   app:dotEmptyBackground="@drawable/empty"                // Customize the empty state of the dots
-  app:dotFilledBackground"@drawable/filled"               // Customize the filled state of the dots
+  app:dotFilledBackground="@drawable/filled"              // Customize the filled state of the dots
   app:dotDiameter="12dp"                                  // Change the diameter of the dots
   app:dotSpacing="16dp"                                   // Change the spacing between individual dots
   app:indicatorType="fillWithAnimation"                   // Choose between "fixed", "fill" and "fillWithAnimation"
