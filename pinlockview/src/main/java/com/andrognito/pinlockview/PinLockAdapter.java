@@ -3,8 +3,6 @@ package com.andrognito.pinlockview;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.os.Build;
-import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by aritraroy on 31/05/16.
@@ -74,13 +74,8 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if (mCustomizationOptionsBundle != null) {
                 holder.mNumberButton.setTextColor(mCustomizationOptionsBundle.getTextColor());
                 if (mCustomizationOptionsBundle.getButtonBackgroundDrawable() != null) {
-                    if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                        holder.mNumberButton.setBackgroundDrawable(
-                                mCustomizationOptionsBundle.getButtonBackgroundDrawable());
-                    } else {
-                        holder.mNumberButton.setBackground(
-                                mCustomizationOptionsBundle.getButtonBackgroundDrawable());
-                    }
+                    holder.mNumberButton.setBackground(
+                            mCustomizationOptionsBundle.getButtonBackgroundDrawable());
                 }
                 holder.mNumberButton.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                         mCustomizationOptionsBundle.getTextSize());
@@ -178,12 +173,22 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mCustomizationOptionsBundle = customizationOptionsBundle;
     }
 
+    public interface OnNumberClickListener {
+        void onNumberClicked(int keyValue);
+    }
+
+    public interface OnDeleteClickListener {
+        void onDeleteClicked();
+
+        void onDeleteLongClicked();
+    }
+
     public class NumberViewHolder extends RecyclerView.ViewHolder {
         Button mNumberButton;
 
         public NumberViewHolder(final View itemView) {
             super(itemView);
-            mNumberButton = (Button) itemView.findViewById(R.id.button);
+            mNumberButton = itemView.findViewById(R.id.button);
             mNumberButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -201,8 +206,8 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public DeleteViewHolder(final View itemView) {
             super(itemView);
-            mDeleteButton = (LinearLayout) itemView.findViewById(R.id.button);
-            mButtonImage = (ImageView) itemView.findViewById(R.id.buttonImage);
+            mDeleteButton = itemView.findViewById(R.id.button);
+            mButtonImage = itemView.findViewById(R.id.buttonImage);
 
             if (mCustomizationOptionsBundle.isShowDeleteButton() && mPinLength > 0) {
                 mDeleteButton.setOnClickListener(new View.OnClickListener() {
@@ -248,15 +253,5 @@ public class PinLockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 });
             }
         }
-    }
-
-    public interface OnNumberClickListener {
-        void onNumberClicked(int keyValue);
-    }
-
-    public interface OnDeleteClickListener {
-        void onDeleteClicked();
-
-        void onDeleteLongClicked();
     }
 }

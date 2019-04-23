@@ -1,8 +1,9 @@
 package com.andrognito.pinlockview;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
 import android.util.AttributeSet;
+
+import androidx.recyclerview.widget.GridLayoutManager;
 
 /**
  * Used to always maintain an LTR layout no matter what is the real device's layout direction
@@ -25,7 +26,7 @@ public class LTRGridLayoutManager extends GridLayoutManager {
     }
 
     @Override
-    protected boolean isLayoutRTL(){
+    protected boolean isLayoutRTL() {
         return false;
     }
 }
