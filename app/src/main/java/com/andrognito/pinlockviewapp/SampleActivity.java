@@ -20,20 +20,25 @@ public class SampleActivity extends AppCompatActivity {
     public static final String TAG = "PinLockView";
 
     private PinLockView mPinLockView;
-    private IndicatorDots mIndicatorDots;
+    private IndicatorDots mIndicatorDotsFirst;
+    private IndicatorDots mIndicatorDotsSecond;
 
     private PinLockListener mPinLockListener = new PinLockListener() {
         @Override
         public void onComplete(String pin) {
             Log.d(TAG, "Pin complete: " + pin);
             Animation shake = AnimationUtils.loadAnimation(SampleActivity.this, R.anim.shake_wrong);
-            mIndicatorDots.startAnimation(shake);
-            mIndicatorDots.setErrorDots();
+            mIndicatorDotsFirst.startAnimation(shake);
+//            mIndicatorDotsFirst.setErrorDots();
+            mIndicatorDotsFirst.setSuccessDots();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mIndicatorDots.setDefaultDots();
+                    mIndicatorDotsFirst.setDefaultDots();
                     mPinLockView.resetPinLockView();
+
+//                    mPinLockView.attachIndicatorDots(mIndicatorDotsSecond);
+
                 }
             }, 1000);
         }
@@ -58,10 +63,11 @@ public class SampleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sample);
 
         mPinLockView = findViewById(R.id.pin_lock_view);
-        mIndicatorDots = findViewById(R.id.indicator_dots);
+        mIndicatorDotsFirst = findViewById(R.id.indicator_dots_first);
+        mIndicatorDotsSecond = findViewById(R.id.indicator_dots_second);
 
 
-        mPinLockView.attachIndicatorDots(mIndicatorDots);
+        mPinLockView.attachIndicatorDots(mIndicatorDotsFirst);
         mPinLockView.setPinLockListener(mPinLockListener);
         //mPinLockView.setCustomKeySet(new int[]{2, 3, 1, 5, 9, 6, 7, 0, 8, 4});
         //mPinLockView.enableLayoutShuffling();
@@ -69,7 +75,6 @@ public class SampleActivity extends AppCompatActivity {
         mPinLockView.setPinLength(4);
         mPinLockView.setTextColor(ContextCompat.getColor(this, R.color.white));
 
-        mIndicatorDots.setIndicatorType(IndicatorDots.IndicatorType.FIXED);
-        mIndicatorDots.getPinLength();
+        mIndicatorDotsFirst.setIndicatorType(IndicatorDots.IndicatorType.FIXED);
     }
 }

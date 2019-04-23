@@ -28,6 +28,7 @@ public class IndicatorDots extends LinearLayout {
     private int mFillDrawable;
     private int mEmptyDrawable;
     private int mErrorDrawable;
+    private int mSuccessDrawable;
     private int mPinLength;
     private int mIndicatorType;
     private int mPreviousLength;
@@ -52,6 +53,8 @@ public class IndicatorDots extends LinearLayout {
                     R.drawable.dot_filled);
             mErrorDrawable = typedArray.getResourceId(R.styleable.PinLockView_dotFilledBackground,
                     R.drawable.dot_error);
+            mSuccessDrawable = typedArray.getResourceId(R.styleable.PinLockView_dotFilledBackground,
+                    R.drawable.dot_success);
             mEmptyDrawable = typedArray.getResourceId(R.styleable.PinLockView_dotEmptyBackground,
                     R.drawable.dot_empty);
             mPinLength = typedArray.getInt(R.styleable.PinLockView_pinLength, DEFAULT_PIN_LENGTH);
@@ -141,6 +144,13 @@ public class IndicatorDots extends LinearLayout {
         }
     }
 
+    public void setSuccessDots() {
+        for (int i = 0; i < getChildCount(); i++) {
+            View v = getChildAt(i);
+            successDot(v);
+        }
+    }
+
     public void setDefaultDots() {
 //        for (int i = 0; i < getChildCount(); i++) {
 //            View v = getChildAt(i);
@@ -161,6 +171,10 @@ public class IndicatorDots extends LinearLayout {
 
     private void errorDot(View dot) {
         dot.setBackgroundResource(mErrorDrawable);
+    }
+
+    private void successDot(View dot) {
+        dot.setBackgroundResource(mSuccessDrawable);
     }
 
     public int getPinLength() {
