@@ -22,23 +22,14 @@ import java.lang.annotation.RetentionPolicy;
  */
 public class IndicatorDots extends LinearLayout {
 
-    @IntDef({IndicatorType.FIXED, IndicatorType.FILL, IndicatorType.FILL_WITH_ANIMATION})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface IndicatorType {
-        int FIXED = 0;
-        int FILL = 1;
-        int FILL_WITH_ANIMATION = 2;
-    }
-
     private static final int DEFAULT_PIN_LENGTH = 4;
-
     private int mDotDiameter;
     private int mDotSpacing;
     private int mFillDrawable;
     private int mEmptyDrawable;
+    private int mErrorDrawable;
     private int mPinLength;
     private int mIndicatorType;
-
     private int mPreviousLength;
 
     public IndicatorDots(Context context) {
@@ -59,6 +50,8 @@ public class IndicatorDots extends LinearLayout {
             mDotSpacing = (int) typedArray.getDimension(R.styleable.PinLockView_dotSpacing, ResourceUtils.getDimensionInPx(getContext(), R.dimen.default_dot_spacing));
             mFillDrawable = typedArray.getResourceId(R.styleable.PinLockView_dotFilledBackground,
                     R.drawable.dot_filled);
+            mErrorDrawable = typedArray.getResourceId(R.styleable.PinLockView_dotFilledBackground,
+                    R.drawable.dot_error);
             mEmptyDrawable = typedArray.getResourceId(R.styleable.PinLockView_dotEmptyBackground,
                     R.drawable.dot_empty);
             mPinLength = typedArray.getInt(R.styleable.PinLockView_pinLength, DEFAULT_PIN_LENGTH);
@@ -141,12 +134,33 @@ public class IndicatorDots extends LinearLayout {
         }
     }
 
+    public void setErrorDots() {
+        for (int i = 0; i < getChildCount(); i++) {
+            View v = getChildAt(i);
+            errorDot(v);
+        }
+    }
+
+    public void setDefaultDots() {
+//        for (int i = 0; i < getChildCount(); i++) {
+//            View v = getChildAt(i);
+//            emptyDot(v);
+//        }
+        removeAllViews();
+        initView(getContext());
+        mPreviousLength = 0;
+    }
+
     private void emptyDot(View dot) {
         dot.setBackgroundResource(mEmptyDrawable);
     }
 
     private void fillDot(View dot) {
         dot.setBackgroundResource(mFillDrawable);
+    }
+
+    private void errorDot(View dot) {
+        dot.setBackgroundResource(mErrorDrawable);
     }
 
     public int getPinLength() {
@@ -169,5 +183,13 @@ public class IndicatorDots extends LinearLayout {
         this.mIndicatorType = type;
         removeAllViews();
         initView(getContext());
+    }
+
+    @IntDef({IndicatorType.FIXED, IndicatorType.FILL, IndicatorType.FILL_WITH_ANIMATION})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface IndicatorType {
+        int FIXED = 0;
+        int FILL = 1;
+        int FILL_WITH_ANIMATION = 2;
     }
 }

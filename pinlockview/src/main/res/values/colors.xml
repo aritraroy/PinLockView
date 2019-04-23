@@ -2,5 +2,6 @@
 <resources>
     <color name="white">#fff</color>
     <color name="greyish">#aaa8a8</color>
+    <color name="reddish">#9E0000</color>
     <color name="mine_shaft">#303030</color>
 </resources>

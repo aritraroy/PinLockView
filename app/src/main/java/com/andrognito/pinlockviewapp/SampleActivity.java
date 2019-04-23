@@ -1,9 +1,12 @@
 package com.andrognito.pinlockviewapp;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -23,6 +26,16 @@ public class SampleActivity extends AppCompatActivity {
         @Override
         public void onComplete(String pin) {
             Log.d(TAG, "Pin complete: " + pin);
+            Animation shake = AnimationUtils.loadAnimation(SampleActivity.this, R.anim.shake_wrong);
+            mIndicatorDots.startAnimation(shake);
+            mIndicatorDots.setErrorDots();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mIndicatorDots.setDefaultDots();
+                    mPinLockView.resetPinLockView();
+                }
+            }, 1000);
         }
 
         @Override
@@ -47,6 +60,7 @@ public class SampleActivity extends AppCompatActivity {
         mPinLockView = findViewById(R.id.pin_lock_view);
         mIndicatorDots = findViewById(R.id.indicator_dots);
 
+
         mPinLockView.attachIndicatorDots(mIndicatorDots);
         mPinLockView.setPinLockListener(mPinLockListener);
         //mPinLockView.setCustomKeySet(new int[]{2, 3, 1, 5, 9, 6, 7, 0, 8, 4});
@@ -55,6 +69,7 @@ public class SampleActivity extends AppCompatActivity {
         mPinLockView.setPinLength(4);
         mPinLockView.setTextColor(ContextCompat.getColor(this, R.color.white));
 
-        mIndicatorDots.setIndicatorType(IndicatorDots.IndicatorType.FILL_WITH_ANIMATION);
+        mIndicatorDots.setIndicatorType(IndicatorDots.IndicatorType.FIXED);
+        mIndicatorDots.getPinLength();
     }
 }
