@@ -22,9 +22,12 @@ class SampleActivity : AppCompatActivity() {
         override fun onComplete(pin: String) {
             Log.d(TAG, "Pin complete: $pin")
             val shake = AnimationUtils.loadAnimation(this@SampleActivity, R.anim.shake_wrong)
-            mIndicatorDotsFirst!!.startAnimation(shake)
-            //            mIndicatorDotsFirst.setErrorDots();
-            mIndicatorDotsFirst!!.setSuccessDots()
+            if (pin == "1111") {
+                mIndicatorDotsFirst!!.setSuccessDots()
+            } else {
+                mIndicatorDotsFirst!!.setErrorDots()
+                mIndicatorDotsFirst!!.startAnimation(shake)
+            }
             Handler().postDelayed({
                 mIndicatorDotsFirst!!.setDefaultDots()
                 mPinLockView!!.resetPinLockView()
@@ -48,7 +51,11 @@ class SampleActivity : AppCompatActivity() {
             val shake = AnimationUtils.loadAnimation(this@SampleActivity, R.anim.shake_wrong)
             mIndicatorDotsFirst!!.startAnimation(shake)
             //            mIndicatorDotsFirst.setErrorDots();
-            mIndicatorDotsFirst!!.setSuccessDots()
+            if (pin == "1111") {
+                mIndicatorDotsFirst!!.setSuccessDots()
+            } else {
+                mIndicatorDotsFirst!!.setErrorDots()
+            }
             Handler().postDelayed({
                 mIndicatorDotsFirst!!.setDefaultDots()
                 mPinLockView!!.resetPinLockView()
