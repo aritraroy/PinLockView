@@ -7,21 +7,21 @@
     android:background="@color/mine_shaft"
     tools:context="com.andrognito.pinlockviewapp.SampleActivity">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/profile_image"
         android:layout_width="84dp"
         android:layout_height="84dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="86dp"
         android:src="@drawable/img_no_avatar" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/profile_name"
         android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_image"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="sans-serif-thin"
         android:gravity="center"
         android:maxLines="1"
@@ -30,20 +30,28 @@
         android:textSize="34sp" />
 
     <com.andrognito.pinlockview.IndicatorDots
-        android:id="@+id/indicator_dots"
+        android:id="@+id/indicator_dots_first"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/profile_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp" />
+        android:layout_marginTop="32dp" />
+
+    <com.andrognito.pinlockview.IndicatorDots
+        android:id="@+id/indicator_dots_second"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/indicator_dots_first"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp" />
 
     <com.andrognito.pinlockview.PinLockView
         android:id="@+id/pin_lock_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/indicator_dots"
+        android:layout_below="@id/indicator_dots_second"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         app:keypadButtonSize="72dp"
         app:keypadShowDeleteButton="true"
         app:keypadTextColor="@color/white"
