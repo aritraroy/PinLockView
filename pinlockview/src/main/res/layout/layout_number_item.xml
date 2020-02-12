@@ -6,10 +6,10 @@
     android:clipToPadding="false"
     android:orientation="vertical">
 
-    <Button
+    <TextView
         android:id="@+id/button"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:background="?android:attr/selectableItemBackground"/>
-
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:gravity="center" />
 </LinearLayout>

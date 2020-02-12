@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 /**
  * The customization options for the buttons in {@link PinLockView}
  * passed to the {@link PinLockAdapter} to decorate the individual views
- *
+ * <p>
  * Created by aritraroy on 01/06/16.
  */
 public class CustomizationOptionsBundle {
@@ -47,7 +47,7 @@ public class CustomizationOptionsBundle {
     }
 
     public Drawable getButtonBackgroundDrawable() {
-        return buttonBackgroundDrawable;
+        return buttonBackgroundDrawable.getConstantState().newDrawable();
     }
 
     public void setButtonBackgroundDrawable(Drawable buttonBackgroundDrawable) {
